@@ -18,6 +18,38 @@
         { "type": "Sun-dried flakes", "relatedUnits": ["Solar dryer", "Tray dryer"] }
       ]
     },
+    "translations": {
+      "hi": {
+        "shelfLife": {
+          "normal": "कमरे के तापमान पर 2-3 दिन",
+          "coldStorage": "8-10 डिग्री सेल्सियस पर 7-10 दिन"
+        },
+        "zeroLossMeasures": {
+          "primary": "कटाई के 2 घंटे के भीतर छाया में प्री-कूलिंग; हवादार क्रेट का उपयोग करें।",
+          "secondary": [
+            "फटे हुए फलों को हटाने के लिए छंटाई और ग्रेडिंग करें।",
+            "संक्षेपण को कम करने के लिए छिद्रित लाइनर का उपयोग करें।"
+          ],
+          "processingOptions": [
+            { "type": "गूदा (Pulp)", "relatedUnits": ["मिनी पल्पर", "स्टीम ब्लांचर"] },
+            { "type": "धूप में सूखे गुच्छे", "relatedUnits": ["सोलर ड्रायर", "ट्रे ड्रायर"] }
+          ]
+        }
+      },
+      "or": {
+        "shelfLife": {
+          "normal": "ସାଧାରଣ ତାପମାତ୍ରାରେ ୨-୩ ଦିନ",
+          "coldStorage": "୮-୧୦ ଡିଗ୍ରୀ ସେଲସିୟସରେ ୭-୧୦ ଦିନ"
+        },
+        "zeroLossMeasures": {
+          "primary": "ଅମଳର ୨ ଘଣ୍ଟା ମଧ୍ୟରେ ଛାଇରେ ଥଣ୍ଡା କରନ୍ତୁ; ପବନ ଚଳାଚଳ କରୁଥିବା କ୍ରେଟ୍ ବ୍ୟବହାର କରନ୍ତୁ।",
+          "secondary": [
+            "ଫାଟିଯାଇଥିବା ଫଳଗୁଡ଼ିକୁ ବାହାର କରିବା ପାଇଁ ବାଛନ୍ତୁ।",
+            "ଜଳୀୟ ବାଷ୍ପ କମାଇବା ପାଇଁ କଣା ଥିବା ଲାଇନର୍ ବ୍ୟବହାର କରନ୍ତୁ।"
+          ]
+        }
+      }
+    },
     "sellingChannels": {
       "direct": ["Local haats", "RWBCIS-linked FPO stalls"],
       "aggregation": ["FPO packhouse", "APMC collection point"],

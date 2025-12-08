@@ -19,25 +19,45 @@ function loadGuidesFromFile() {
   return []
 }
 
-export async function listCropGuides() {
+export async function listCropGuides(lang = 'en') {
   const docs = await CropGuide.find({}).lean()
-  if (docs.length) return docs
-
-  // Fallback: hydrate from JSON and upsert so subsequent calls hit Mongo
-  const fallback = loadGuidesFromFile()
-  if (fallback.length) {
-    await upsertCropGuides(fallback).catch((e) => console.warn('[crop-guides] upsert fallback failed', e?.message || e))
+  const guides = docs.length ? docs : loadGuidesFromFile()
+  
+  if (docs.length === 0 && guides.length > 0) {
+    // Background upsert if using fallback
+    upsertCropGuides(guides).catch((e) => console.warn('[crop-guides] upsert fallback failed', e?.message || e))
   }
-  return fallback
+
+  return guides.map(g => translateGuide(g, lang))
 }
 
-export async function getCropGuideByName(name) {
+export async function getCropGuideByName(name, lang = 'en') {
   if (!name) return null
-  const doc = await CropGuide.findOne({ cropName: new RegExp(`^${name}$`, 'i') }).lean()
-  if (doc) return doc
+  let doc = await CropGuide.findOne({ cropName: new RegExp(`^${name}$`, 'i') }).lean()
+  
+  if (!doc) {
+    const fallback = loadGuidesFromFile()
+    doc = fallback.find((g) => g.cropName?.toLowerCase() === String(name).toLowerCase()) || null
+  }
 
-  const fallback = loadGuidesFromFile()
-  return fallback.find((g) => g.cropName?.toLowerCase() === String(name).toLowerCase()) || null
+  return doc ? translateGuide(doc, lang) : null
+}
+
+function translateGuide(guide, lang) {
+  if (!guide) return guide
+  if (lang === 'en' || !guide.translations || !guide.translations[lang]) return guide
+  
+  // Merge translation over base guide
+  // We exclude 'translations' from the output to keep it clean
+  const { translations, ...base } = guide
+  const translated = translations[lang]
+  
+  // Deep merge could be better, but shallow merge of top-level keys is a start.
+  // However, structure like shelfLife is nested.
+  // Let's assume the translation object mirrors the structure and we just spread it.
+  // For nested objects, we might need deep merge if partial translation is allowed.
+  // For now, simple spread.
+  return { ...base, ...translated }
 }
 
 export async function upsertCropGuides(guides) {

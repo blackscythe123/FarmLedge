@@ -2,6 +2,7 @@ import dotenv from 'dotenv'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import express from 'express'
+import axios from 'axios'
 import cors from "cors";
 import Stripe from 'stripe'
 import bodyParser from 'body-parser'
@@ -588,7 +589,8 @@ app.post('/api/schemes/notify-test', async (req, res) => {
 // Zero-loss crop guides: list and lookup by name
 app.get('/api/crop-guides', async (req, res) => {
   try {
-    const guides = await listCropGuides()
+    const lang = req.query.lang || 'en'
+    const guides = await listCropGuides(lang)
     res.json({ ok: true, guides })
   } catch (e) {
     res.status(500).json({ ok: false, error: e?.message || 'crop_guides_error' })
@@ -597,7 +599,8 @@ app.get('/api/crop-guides', async (req, res) => {
 
 app.get('/api/crop-guides/:name', async (req, res) => {
   try {
-    const guide = await getCropGuideByName(req.params.name)
+    const lang = req.query.lang || 'en'
+    const guide = await getCropGuideByName(req.params.name, lang)
     if (!guide) return res.status(404).json({ ok: false, error: 'guide_not_found' })
     res.json({ ok: true, guide })
   } catch (e) {
@@ -1279,6 +1282,31 @@ app.get('/api/chain-info', async (req, res) => {
     res.status(500).json({ error: 'diagnostic_failed', message: e?.message || String(e) })
   }
 })
+
+app.post('/api/weather-alert', async (req, res) => {
+  try {
+    const { message, recipients } = req.body
+    const webhookUrl = process.env.N8N_WEBHOOK_SECRET || process.env.WHATSAPP_WEBHOOK_URL
+
+    if (!webhookUrl) {
+      console.error('Webhook URL not configured')
+      return res.status(500).json({ error: 'Webhook not configured' })
+    }
+
+    await axios.post(webhookUrl, {
+      type: 'weather_alert',
+      message,
+      recipients,
+      timestamp: new Date().toISOString()
+    })
+
+    res.json({ success: true })
+  } catch (error) {
+    console.error('Weather alert failed', error)
+    res.status(500).json({ error: 'Failed to send alert' })
+  }
+})
+
 const PORT = process.env.PORT || 3001;
 const server = app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server listening on port ${PORT}`);
@@ -1446,7 +1474,6 @@ const checkExpiryHandler = async (req, res) => {
 
     const now = Math.floor(Date.now() / 1000)
     const ONE_DAY = 24 * 60 * 60
-    const WINDOWS = [30, 14, 7, 1]
     const alertsSent = []
     const recommendedSchemes = listSchemes().slice(0, 3)
 
@@ -1461,15 +1488,20 @@ const checkExpiryHandler = async (req, res) => {
         const timeLeft = expiryDate - now
         if (timeLeft <= 0) continue
 
-        const windowDays = WINDOWS.find((days) => timeLeft <= days * ONE_DAY && timeLeft > (days - 1) * ONE_DAY)
-        if (!windowDays) continue
-        if (!isSameAddress(currentOwner, farmer)) continue
+        // Check if expiring in next 2 days
+        if (timeLeft > 2 * ONE_DAY) continue
+        
+        const windowDays = Math.ceil(timeLeft / ONE_DAY)
 
-        const sub = await getSubscriptionByFarmer(farmer)
-        if (!sub?.phone) continue
+        if (!isSameAddress(currentOwner, farmer)) {
+          console.log(`[cron] Batch ${id} skipped: owner ${currentOwner} != farmer ${farmer}`)
+          continue
+        }
+
+        const sub = await getSubscriptionByFarmer(farmer) || {}
 
         await sendWhatsAppMessage({
-          phone: sub.phone,
+          phone: sub.phone || null,
           farmerAddress: farmer,
           language: sub.language || 'en',
           batchId: id,
@@ -1478,7 +1510,7 @@ const checkExpiryHandler = async (req, res) => {
           schemes: recommendedSchemes,
           schemeIds: sub.schemeIds || recommendedSchemes.map((s) => s.id)
         })
-        alertsSent.push({ batchId: id.toString(), farmer, expiryDate, windowDays, phone: sub.phone })
+        alertsSent.push({ batchId: id.toString(), farmer, expiryDate, windowDays, phone: sub.phone || 'n8n-lookup' })
       } catch (e) {
         console.warn(`[cron] Failed to check batch ${id}`, e)
       }
@@ -1511,7 +1543,7 @@ async function sendWhatsAppMessage({ phone, farmerAddress, language = 'en', batc
     window: s.window,
   }))
 
-  console.log(`[WHATSAPP] Sending webhook request for Batch #${batchId} to phone=${phone}`)
+  console.log(`[WHATSAPP] Sending webhook request for Batch #${batchId} (Farmer: ${farmerAddress})`)
     
   try {
     const response = await fetch(webhookUrl, {
@@ -1529,7 +1561,7 @@ async function sendWhatsAppMessage({ phone, farmerAddress, language = 'en', batc
         windowDays,
         schemeIds,
         schemes: schemePayload,
-        message: `Batch #${batchId} expires on ${dateStr}. Apply/renew key schemes (PMFBY, KCC, PM-KISAN) to reduce losses. Window: ~${windowDays} days left.`
+        message: `Batch #${batchId} is expiring on ${dateStr}. Apply for schemes to mitigate loss: ${schemePayload.map(s => s.applyUrl).join(', ')}`
       })
     })
         
