@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
-import { ChevronRight, Search, Package, ArrowRight, Leaf, ShieldCheck, Clock, QrCode, Copy, Link as LinkIcon, Download, Tractor, Store, ShoppingCart, User, Sprout, Target, Beaker, CloudRain, FileText, TrendingUp, Warehouse, Thermometer, Shield, Check, Cloud, Building2 } from "lucide-react";
+import { ChevronRight, Search, Package, ArrowRight, Leaf, ShieldCheck, Clock, QrCode, Copy, Link as LinkIcon, Download, Tractor, Store, ShoppingCart, User, Sprout, Target, Beaker, CloudRain, FileText, TrendingUp, Warehouse, Thermometer, Shield, Check, Cloud, Building2, Mic } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -227,49 +227,77 @@ const Index = () => {
       <Navigation />
       
       <main>
-        {/* Hero Section - Government Style */}
-        <section className="relative pt-32 pb-20 bg-gradient-to-r from-green-800 via-emerald-700 to-green-800 overflow-hidden">
-          {/* Background Pattern */}
-          <div 
-            className="absolute inset-0 opacity-10"
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v6h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-            }}
-          ></div>
+        {/* Hero Section - Professional Government Style */}
+        <section className="relative pt-24 pb-16 bg-gradient-to-br from-emerald-900 via-green-800 to-teal-900 overflow-hidden">
+          {/* Elegant Background Pattern */}
+          <div className="absolute inset-0">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,255,255,0.1)_0%,transparent_50%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(255,255,255,0.08)_0%,transparent_50%)]" />
+            <div 
+              className="absolute inset-0 opacity-5"
+              style={{
+                backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='1' fill-rule='evenodd'/%3E%3C/svg%3E")`,
+              }}
+            />
+          </div>
 
           <div className="container mx-auto px-4 relative z-10">
             <div className="max-w-6xl mx-auto">
-              {/* Government Header Style */}
-              <div className="flex items-center gap-6 mb-8">
-                <img 
-                  src="/src/assets/odisha-logo.jpg" 
-                  alt="Odisha Government" 
-                  className="w-24 h-24 rounded-full bg-white p-2 shadow-xl"
-                />
-                <div>
-                  <Badge className="mb-3 bg-white/20 text-white border-white/30 backdrop-blur-sm text-base px-6 py-2">
-                    Government of Odisha Initiative
-                  </Badge>
-                  <h1 className="text-5xl md:text-6xl font-bold text-white mb-3 leading-tight">
+              {/* Official Government Header */}
+              <div className="flex items-start gap-8 mb-10">
+                <div className="relative">
+                  <div className="w-40 h-40 rounded-full shadow-2xl ring-4 ring-white/20 overflow-hidden">
+                    <img 
+                      src="/src/assets/odisha-logo.jpg" 
+                      alt="Odisha Government Emblem" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="absolute -bottom-2 -right-2 w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center shadow-lg border-4 border-white">
+                    <ShieldCheck className="w-7 h-7 text-white" />
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <div className="inline-flex items-center gap-2 mb-3 bg-white/15 backdrop-blur-md border border-white/25 rounded-full px-5 py-2">
+                    <div className="w-2 h-2 bg-green-300 rounded-full animate-pulse" />
+                    <span className="text-white font-medium text-sm tracking-wide">{t('hero.badge')}</span>
+                  </div>
+                  <h1 className="text-5xl md:text-7xl font-black text-white mb-3 leading-none tracking-tight">
                     FarmLedge
                   </h1>
-                  <p className="text-xl text-green-100 font-medium">
-                    Blockchain Verified Supply Chain • Farm to Fork Transparency
+                  <div className="flex items-center gap-3 text-emerald-100">
+                    <div className="h-px w-12 bg-emerald-300" />
+                    <p className="text-lg md:text-xl font-semibold">
+                      {t('hero.badge')}
+                    </p>
+                  </div>
+                  <p className="text-emerald-200/90 text-base mt-2 font-medium">
+                    {t('hero.titleSpan')}
                   </p>
                 </div>
               </div>
 
-              {/* Main Content */}
-              <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 md:p-12 mb-8">
-                <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                  Trust in every grain.
-                </h2>
-                <p className="text-2xl text-green-100 mb-8">
-                  Verifiable from Farm to Fork.
-                </p>
-                <p className="text-lg text-white/90 mb-8 max-w-3xl">
-                  Enter a Batch ID to instantly trace the entire journey of your produce on the blockchain.
-                </p>
+              {/* Main Content Card */}
+              <div className="relative bg-white/95 backdrop-blur-xl rounded-3xl p-8 md:p-12 mb-8 shadow-2xl border-2 border-white/50">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-green-400/10 to-emerald-600/10 rounded-full blur-3xl" />
+                <div className="relative z-10">
+                  <div className="flex items-start justify-between mb-6">
+                    <div>
+                      <h2 className="text-3xl md:text-5xl font-black text-gray-900 mb-3 leading-tight">
+                        {t('hero.titleMain')}
+                      </h2>
+                      <p className="text-xl md:text-2xl text-emerald-700 font-bold mb-4">
+                        {t('hero.titleSpan')}
+                      </p>
+                    </div>
+                    <Badge className="bg-green-600 text-white px-4 py-2 text-sm font-semibold">
+                      <Clock className="w-4 h-4 mr-2" />
+                      Live Tracking
+                    </Badge>
+                  </div>
+                  <p className="text-base text-gray-700 mb-8 max-w-3xl leading-relaxed">
+                    {t('hero.description')}
+                  </p>
 
                 {/* Search Box */}
                 <div className="bg-white rounded-xl p-2 flex flex-col md:flex-row gap-3 shadow-2xl max-w-2xl">
@@ -277,7 +305,7 @@ const Index = () => {
                     <Search className="w-5 h-5 text-gray-400" />
                     <Input
                       type="text"
-                      placeholder="Enter Batch ID (e.g., 105)"
+                      placeholder={t('index.searchPlaceholder')}
                       value={search}
                       onChange={(e) => setSearch(e.target.value)}
                       onKeyDown={(e) => e.key === "Enter" && handleSearch()}
@@ -294,64 +322,81 @@ const Index = () => {
                       className="bg-gray-100 hover:bg-gray-200 border-gray-200 text-gray-700"
                     >
                       <QrCode className="w-5 h-5 mr-2" />
-                      Generate QR
+                      {t('index.searchPlaceholder').includes('QR') ? 'Generate QR' : 'Generate QR'}
                     </Button>
                     <Button 
                       onClick={handleSearch}
                       className="bg-green-600 hover:bg-green-700 text-white px-8"
                       size="lg"
                     >
-                      Track
+                      {t('index.trackButton')}
                       <ArrowRight className="w-5 h-5 ml-2" />
                     </Button>
                   </div>
                 </div>
+                </div>
               </div>
 
-              {/* Stats Cards */}
-              <div className="grid md:grid-cols-4 gap-4">
-                <Card className="bg-white/10 backdrop-blur-md border-white/20 text-white p-6">
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className="p-3 bg-white/20 rounded-lg">
-                      <ShieldCheck className="h-6 w-6" />
+              {/* Professional Stats Grid */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <Card className="bg-gradient-to-br from-white to-green-50 border-2 border-green-200 p-6 hover:shadow-xl transition-all group">
+                  <div className="flex flex-col gap-3">
+                    <div className="flex items-center justify-between">
+                      <div className="p-3 bg-green-600 rounded-xl shadow-lg group-hover:scale-110 transition-transform">
+                        <ShieldCheck className="h-7 w-7 text-white" />
+                      </div>
+                      <Badge className="bg-green-100 text-green-700 border-green-300 text-xs font-bold">{t('stats.verified')}</Badge>
                     </div>
-                    <h3 className="text-sm font-medium opacity-90">Blockchain Verified</h3>
+                    <div>
+                      <p className="text-3xl font-black text-green-700">100%</p>
+                      <p className="text-xs font-semibold text-gray-600 uppercase tracking-wider mt-1">{t('stats.blockchainVerified')}</p>
+                    </div>
                   </div>
-                  <p className="text-2xl font-bold">100%</p>
-                  <p className="text-xs opacity-75">Immutable Records</p>
                 </Card>
 
-                <Card className="bg-white/10 backdrop-blur-md border-white/20 text-white p-6">
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className="p-3 bg-white/20 rounded-lg">
-                      <Package className="h-6 w-6" />
+                <Card className="bg-gradient-to-br from-white to-blue-50 border-2 border-blue-200 p-6 hover:shadow-xl transition-all group">
+                  <div className="flex flex-col gap-3">
+                    <div className="flex items-center justify-between">
+                      <div className="p-3 bg-blue-600 rounded-xl shadow-lg group-hover:scale-110 transition-transform">
+                        <Package className="h-7 w-7 text-white" />
+                      </div>
+                      <Badge className="bg-blue-100 text-blue-700 border-blue-300 text-xs font-bold">{t('stats.live')}</Badge>
                     </div>
-                    <h3 className="text-sm font-medium opacity-90">Total Batches</h3>
+                    <div>
+                      <p className="text-3xl font-black text-blue-700">{totalBatches}</p>
+                      <p className="text-xs font-semibold text-gray-600 uppercase tracking-wider mt-1">{t('stats.totalBatches')}</p>
+                    </div>
                   </div>
-                  <p className="text-2xl font-bold">{totalBatches}</p>
-                  <p className="text-xs opacity-75">Tracked Products</p>
                 </Card>
 
-                <Card className="bg-white/10 backdrop-blur-md border-white/20 text-white p-6">
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className="p-3 bg-white/20 rounded-lg">
-                      <Tractor className="h-6 w-6" />
+                <Card className="bg-gradient-to-br from-white to-orange-50 border-2 border-orange-200 p-6 hover:shadow-xl transition-all group">
+                  <div className="flex flex-col gap-3">
+                    <div className="flex items-center justify-between">
+                      <div className="p-3 bg-orange-600 rounded-xl shadow-lg group-hover:scale-110 transition-transform">
+                        <Tractor className="h-7 w-7 text-white" />
+                      </div>
+                      <Badge className="bg-orange-100 text-orange-700 border-orange-300 text-xs font-bold">{t('stats.active')}</Badge>
                     </div>
-                    <h3 className="text-sm font-medium opacity-90">Registered Farmers</h3>
+                    <div>
+                      <p className="text-3xl font-black text-orange-700">500+</p>
+                      <p className="text-xs font-semibold text-gray-600 uppercase tracking-wider mt-1">{t('stats.farmersRegistered')}</p>
+                    </div>
                   </div>
-                  <p className="text-2xl font-bold">500+</p>
-                  <p className="text-xs opacity-75">Active Users</p>
                 </Card>
 
-                <Card className="bg-white/10 backdrop-blur-md border-white/20 text-white p-6">
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className="p-3 bg-white/20 rounded-lg">
-                      <Leaf className="h-6 w-6" />
+                <Card className="bg-gradient-to-br from-white to-emerald-50 border-2 border-emerald-200 p-6 hover:shadow-xl transition-all group">
+                  <div className="flex flex-col gap-3">
+                    <div className="flex items-center justify-between">
+                      <div className="p-3 bg-emerald-600 rounded-xl shadow-lg group-hover:scale-110 transition-transform">
+                        <Leaf className="h-7 w-7 text-white" />
+                      </div>
+                      <Badge className="bg-emerald-100 text-emerald-700 border-emerald-300 text-xs font-bold">{t('stats.eco')}</Badge>
                     </div>
-                    <h3 className="text-sm font-medium opacity-90">Sustainable</h3>
+                    <div>
+                      <p className="text-3xl font-black text-emerald-700">Green</p>
+                      <p className="text-xs font-semibold text-gray-600 uppercase tracking-wider mt-1">{t('stats.sustainable')}</p>
+                    </div>
                   </div>
-                  <p className="text-2xl font-bold">Green</p>
-                  <p className="text-xs opacity-75">Eco-Friendly</p>
                 </Card>
               </div>
             </div>
@@ -363,13 +408,13 @@ const Index = () => {
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <Badge className="mb-4 bg-green-600 text-white">
-                How It Works
+                {t('howItWorks.badge')}
               </Badge>
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                Blockchain-Powered Transparency
+                {t('howItWorks.title')}
               </h2>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                Four simple steps to complete supply chain visibility
+                {t('howItWorks.subtitle')}
               </p>
             </div>
 
@@ -378,32 +423,32 @@ const Index = () => {
                 <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Tractor className="w-8 h-8 text-green-600" />
                 </div>
-                <h3 className="font-bold text-lg mb-2 text-gray-900">1. Farmer Registers</h3>
-                <p className="text-sm text-gray-600">Batch created on blockchain with harvest details</p>
+                <h3 className="font-bold text-lg mb-2 text-gray-900">{t('howItWorks.step1Title')}</h3>
+                <p className="text-sm text-gray-600">{t('howItWorks.step1Desc')}</p>
               </Card>
 
               <Card className="text-center p-6 border-2 hover:border-blue-500 transition-all hover:shadow-xl">
                 <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Store className="w-8 h-8 text-blue-600" />
                 </div>
-                <h3 className="font-bold text-lg mb-2 text-gray-900">2. Distributor Receives</h3>
-                <p className="text-sm text-gray-600">Ownership transferred and verified on-chain</p>
+                <h3 className="font-bold text-lg mb-2 text-gray-900">{t('howItWorks.step2Title')}</h3>
+                <p className="text-sm text-gray-600">{t('howItWorks.step2Desc')}</p>
               </Card>
 
               <Card className="text-center p-6 border-2 hover:border-purple-500 transition-all hover:shadow-xl">
                 <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <ShoppingCart className="w-8 h-8 text-purple-600" />
                 </div>
-                <h3 className="font-bold text-lg mb-2 text-gray-900">3. Retailer Stocks</h3>
-                <p className="text-sm text-gray-600">Product reaches retail with complete history</p>
+                <h3 className="font-bold text-lg mb-2 text-gray-900">{t('howItWorks.step3Title')}</h3>
+                <p className="text-sm text-gray-600">{t('howItWorks.step3Desc')}</p>
               </Card>
 
               <Card className="text-center p-6 border-2 hover:border-orange-500 transition-all hover:shadow-xl">
                 <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <User className="w-8 h-8 text-orange-600" />
                 </div>
-                <h3 className="font-bold text-lg mb-2 text-gray-900">4. Consumer Verifies</h3>
-                <p className="text-sm text-gray-600">Scan QR code to view complete journey</p>
+                <h3 className="font-bold text-lg mb-2 text-gray-900">{t('howItWorks.step4Title')}</h3>
+                <p className="text-sm text-gray-600">{t('howItWorks.step4Desc')}</p>
               </Card>
             </div>
           </div>
@@ -416,9 +461,9 @@ const Index = () => {
               <div className="text-center mb-10">
                 <h2 className="text-3xl sm:text-4xl font-serif font-bold text-emerald-900 mb-3 flex items-center justify-center gap-2">
                   <Sprout className="w-8 h-8 text-emerald-600" />
-                  Smart Crop Price Prediction
+                  {t('cropPrediction.title')}
                 </h2>
-                <p className="text-slate-600 text-lg">Get Real-time price predictions based on your district's soil type</p>
+                <p className="text-slate-600 text-lg">{t('cropPrediction.subtitle')}</p>
               </div>
 
               <Card className="border-emerald-200 shadow-xl bg-white/80 backdrop-blur-sm">
@@ -429,7 +474,7 @@ const Index = () => {
                       className="w-full bg-emerald-600 hover:bg-emerald-700 text-white text-lg py-6 rounded-lg shadow-lg hover:shadow-xl transition-all"
                     >
                       <Target className="w-5 h-5 mr-2" />
-                      Open Advanced Price Predictor
+                      {t('cropPrediction.selectParameters')}
                       <ChevronRight className="w-5 h-5 ml-2" />
                     </Button>
                   </Link>
@@ -437,15 +482,15 @@ const Index = () => {
                   <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
                     <div className="p-4 bg-emerald-50 rounded-lg">
                       <div className="text-2xl font-bold text-emerald-700">30+</div>
-                      <div className="text-sm text-slate-600">Districts Covered</div>
+                      <div className="text-sm text-slate-600">{t('cropPrediction.selectDistrict') || 'Districts Covered'}</div>
                     </div>
                     <div className="p-4 bg-emerald-50 rounded-lg">
                       <div className="text-2xl font-bold text-emerald-700">8</div>
-                      <div className="text-sm text-slate-600">Soil Types</div>
+                      <div className="text-sm text-slate-600">{t('cropPrediction.soilType') || 'Soil Types'}</div>
                     </div>
                     <div className="p-4 bg-emerald-50 rounded-lg">
                       <div className="text-2xl font-bold text-emerald-700">93%</div>
-                      <div className="text-sm text-slate-600">Accuracy</div>
+                      <div className="text-sm text-slate-600">{t('cropPrediction.highAccuracy') || 'Accuracy'}</div>
                     </div>
                   </div>
                 </CardContent>
@@ -599,13 +644,13 @@ const Index = () => {
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <Badge className="mb-4 bg-green-600 text-white">
-                {t('index.platformFeatures') || 'Platform Features'}
+                {t('solutions.badge')}
               </Badge>
               <h2 className="text-4xl font-bold text-gray-900 mb-4">
-                Comprehensive Agricultural Solutions
+                {t('solutions.title')}
               </h2>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                Empowering farmers with cutting-edge technology and government-backed services
+                {t('solutions.subtitle')}
               </p>
             </div>
 
@@ -618,31 +663,31 @@ const Index = () => {
                       <ShieldCheck className="w-6 h-6" />
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-xl font-bold text-gray-900 mb-2">Blockchain Tracking</h3>
-                      <Badge className="bg-blue-500 text-white">Transparency</Badge>
+                      <h3 className="text-xl font-bold text-gray-900 mb-2">{t('solutions.blockchainTracking')}</h3>
+                      <Badge className="bg-blue-500 text-white">{t('solutions.blockchainTrackingBadge')}</Badge>
                     </div>
                   </div>
                   <ul className="space-y-2 mb-4 text-sm text-gray-700">
                     <li className="flex items-start gap-2">
                       <ChevronRight className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
-                      <span>Supply chain transparency</span>
+                      <span>{t('solutions.supplyChainTransparency')}</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <ChevronRight className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
-                      <span>QR code generation</span>
+                      <span>{t('solutions.qrCodeGeneration')}</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <ChevronRight className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
-                      <span>Immutable blockchain records</span>
+                      <span>{t('solutions.immutableBlockchainRecords')}</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <ChevronRight className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
-                      <span>Price transparency</span>
+                      <span>{t('solutions.priceTransparency')}</span>
                     </li>
                   </ul>
                   <Link to="/batch?id=1">
                     <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
-                      Track Products <ArrowRight className="w-4 h-4 ml-2" />
+                      {t('solutions.trackProduce')} <ArrowRight className="w-4 h-4 ml-2" />
                     </Button>
                   </Link>
                 </CardContent>
@@ -656,31 +701,31 @@ const Index = () => {
                       <CloudRain className="w-6 h-6" />
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-xl font-bold text-gray-900 mb-2">Weather Alerts</h3>
-                      <Badge className="bg-cyan-500 text-white">Real-time</Badge>
+                      <h3 className="text-xl font-bold text-gray-900 mb-2">{t('solutions.weatherAlerts')}</h3>
+                      <Badge className="bg-cyan-500 text-white">{t('solutions.weatherAlertsBadge')}</Badge>
                     </div>
                   </div>
                   <ul className="space-y-2 mb-4 text-sm text-gray-700">
                     <li className="flex items-start gap-2">
                       <ChevronRight className="w-4 h-4 text-cyan-600 mt-0.5 flex-shrink-0" />
-                      <span>7-day weather forecasts</span>
+                      <span>{t('solutions.sevenDayWeatherForecasts')}</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <ChevronRight className="w-4 h-4 text-cyan-600 mt-0.5 flex-shrink-0" />
-                      <span>Multi-channel alerts</span>
+                      <span>{t('solutions.multiChannelAlerts')}</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <ChevronRight className="w-4 h-4 text-cyan-600 mt-0.5 flex-shrink-0" />
-                      <span>Irrigation advisories</span>
+                      <span>{t('solutions.irrigationAdvisories')}</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <ChevronRight className="w-4 h-4 text-cyan-600 mt-0.5 flex-shrink-0" />
-                      <span>Pest outbreak alerts</span>
+                      <span>{t('solutions.pestOutbreakAlerts')}</span>
                     </li>
                   </ul>
                   <Link to="/weather-alerts">
                     <Button className="w-full bg-cyan-600 hover:bg-cyan-700 text-white">
-                      View Weather <ArrowRight className="w-4 h-4 ml-2" />
+                      {t('solutions.viewWeather')} <ArrowRight className="w-4 h-4 ml-2" />
                     </Button>
                   </Link>
                 </CardContent>
@@ -694,31 +739,31 @@ const Index = () => {
                       <FileText className="w-6 h-6" />
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-xl font-bold text-gray-900 mb-2">Government Schemes</h3>
-                      <Badge className="bg-indigo-500 text-white">Benefits</Badge>
+                      <h3 className="text-xl font-bold text-gray-900 mb-2">{t('solutions.governmentSchemes')}</h3>
+                      <Badge className="bg-indigo-500 text-white">{t('solutions.governmentSchemesBadge')}</Badge>
                     </div>
                   </div>
                   <ul className="space-y-2 mb-4 text-sm text-gray-700">
                     <li className="flex items-start gap-2">
                       <ChevronRight className="w-4 h-4 text-indigo-600 mt-0.5 flex-shrink-0" />
-                      <span>PM-KISAN, PMFBY, KCC</span>
+                      <span>{t('solutions.pmKisanPmfbyKcc')}</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <ChevronRight className="w-4 h-4 text-indigo-600 mt-0.5 flex-shrink-0" />
-                      <span>Expiry alerts</span>
+                      <span>{t('solutions.expiryAlerts')}</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <ChevronRight className="w-4 h-4 text-indigo-600 mt-0.5 flex-shrink-0" />
-                      <span>Direct portal links</span>
+                      <span>{t('solutions.directPortalLinks')}</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <ChevronRight className="w-4 h-4 text-indigo-600 mt-0.5 flex-shrink-0" />
-                      <span>Eligibility checks</span>
+                      <span>{t('solutions.eligibilityChecks')}</span>
                     </li>
                   </ul>
                   <Link to="/gov-schemes">
                     <Button className="w-full bg-indigo-600 hover:bg-indigo-700 text-white">
-                      Explore Schemes <ArrowRight className="w-4 h-4 ml-2" />
+                      {t('solutions.exploreSchemes')} <ArrowRight className="w-4 h-4 ml-2" />
                     </Button>
                   </Link>
                 </CardContent>
@@ -732,33 +777,145 @@ const Index = () => {
                       <Warehouse className="w-6 h-6" />
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-xl font-bold text-gray-900 mb-2">Storage Services</h3>
-                      <Badge className="bg-orange-500 text-white">Preservation</Badge>
+                      <h3 className="text-xl font-bold text-gray-900 mb-2">{t('solutions.storageServices')}</h3>
+                      <Badge className="bg-orange-500 text-white">{t('solutions.storageServicesBadge')}</Badge>
                     </div>
                   </div>
                   <ul className="space-y-2 mb-4 text-sm text-gray-700">
                     <li className="flex items-start gap-2">
                       <ChevronRight className="w-4 h-4 text-orange-600 mt-0.5 flex-shrink-0" />
-                      <span>Warehouses & cold storage</span>
+                      <span>{t('solutions.warehousesColdStorage')}</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <ChevronRight className="w-4 h-4 text-orange-600 mt-0.5 flex-shrink-0" />
-                      <span>Alternate crop uses</span>
+                      <span>{t('solutions.alternateCropUses')}</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <ChevronRight className="w-4 h-4 text-orange-600 mt-0.5 flex-shrink-0" />
-                      <span>CSIR-CFTRI guidelines</span>
+                      <span>{t('solutions.csiCftriGuidelines')}</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <ChevronRight className="w-4 h-4 text-orange-600 mt-0.5 flex-shrink-0" />
-                      <span>KVK and testing labs</span>
+                      <span>{t('solutions.kvikTestingLabs')}</span>
                     </li>
                   </ul>
                   <Link to="/storage-services">
                     <Button className="w-full bg-orange-600 hover:bg-orange-700 text-white">
-                      Find Storage <ArrowRight className="w-4 h-4 ml-2" />
+                      {t('solutions.findStorage')} <ArrowRight className="w-4 h-4 ml-2" />
                     </Button>
                   </Link>
+                </CardContent>
+              </Card>
+
+              {/* Price Prediction */}
+              <Card className="group hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 bg-gradient-to-br from-emerald-50 to-green-50 border-2 border-emerald-200 hover:border-emerald-500">
+                <CardContent className="p-6">
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="p-3 bg-emerald-600 rounded-full text-white">
+                      <TrendingUp className="w-6 h-6" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-xl font-bold text-gray-900 mb-2">{t('solutions.pricePrediction')}</h3>
+                      <Badge className="bg-emerald-500 text-white">{t('solutions.pricePredictionBadge')}</Badge>
+                    </div>
+                  </div>
+                  <ul className="space-y-2 mb-4 text-sm text-gray-700">
+                    <li className="flex items-start gap-2">
+                      <ChevronRight className="w-4 h-4 text-emerald-600 mt-0.5 flex-shrink-0" />
+                      <span>{t('solutions.mlBasedPriceForecasting')}</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <ChevronRight className="w-4 h-4 text-emerald-600 mt-0.5 flex-shrink-0" />
+                      <span>{t('solutions.soilTypeAnalysis')}</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <ChevronRight className="w-4 h-4 text-emerald-600 mt-0.5 flex-shrink-0" />
+                      <span>{t('solutions.districtSpecificData')}</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <ChevronRight className="w-4 h-4 text-emerald-600 mt-0.5 flex-shrink-0" />
+                      <span>{t('solutions.accuracyRate')}</span>
+                    </li>
+                  </ul>
+                  <Link to="/price-prediction">
+                    <Button className="w-full bg-emerald-600 hover:bg-emerald-700 text-white">
+                      {t('solutions.predictPrices')} <ArrowRight className="w-4 h-4 ml-2" />
+                    </Button>
+                  </Link>
+                </CardContent>
+              </Card>
+
+              {/* Location Services */}
+              <Card className="group hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 bg-gradient-to-br from-purple-50 to-pink-50 border-2 border-purple-200 hover:border-purple-500">
+                <CardContent className="p-6">
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="p-3 bg-purple-600 rounded-full text-white">
+                      <Target className="w-6 h-6" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-xl font-bold text-gray-900 mb-2">{t('solutions.locationServices')}</h3>
+                      <Badge className="bg-purple-500 text-white">{t('solutions.locationServicesBadge')}</Badge>
+                    </div>
+                  </div>
+                  <ul className="space-y-2 mb-4 text-sm text-gray-700">
+                    <li className="flex items-start gap-2">
+                      <ChevronRight className="w-4 h-4 text-purple-600 mt-0.5 flex-shrink-0" />
+                      <span>{t('solutions.findNearbyKvks')}</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <ChevronRight className="w-4 h-4 text-purple-600 mt-0.5 flex-shrink-0" />
+                      <span>{t('solutions.testingLaboratories')}</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <ChevronRight className="w-4 h-4 text-purple-600 mt-0.5 flex-shrink-0" />
+                      <span>{t('solutions.agriculturalCenters')}</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <ChevronRight className="w-4 h-4 text-purple-600 mt-0.5 flex-shrink-0" />
+                      <span>{t('solutions.interactiveMaps')}</span>
+                    </li>
+                  </ul>
+                  <Link to="/location-services">
+                    <Button className="w-full bg-purple-600 hover:bg-purple-700 text-white">
+                      {t('solutions.exploreLocations')} <ArrowRight className="w-4 h-4 ml-2" />
+                    </Button>
+                  </Link>
+                </CardContent>
+              </Card>
+
+              {/* Voice Bot Assistant */}
+              <Card className="group hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 bg-gradient-to-br from-teal-50 to-cyan-50 border-2 border-teal-200 hover:border-teal-500">
+                <CardContent className="p-6">
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="p-3 bg-teal-600 rounded-full text-white">
+                      <Mic className="w-6 h-6" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-xl font-bold text-gray-900 mb-2">{t('voiceBot.title')}</h3>
+                      <Badge className="bg-teal-500 text-white">{t('voiceBot.badge')}</Badge>
+                    </div>
+                  </div>
+                  <ul className="space-y-2 mb-4 text-sm text-gray-700">
+                    <li className="flex items-start gap-2">
+                      <ChevronRight className="w-4 h-4 text-teal-600 mt-0.5 flex-shrink-0" />
+                      <span>{t('voiceBot.features.multiLanguage')}</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <ChevronRight className="w-4 h-4 text-teal-600 mt-0.5 flex-shrink-0" />
+                      <span>{t('voiceBot.features.realtimeVoice')}</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <ChevronRight className="w-4 h-4 text-teal-600 mt-0.5 flex-shrink-0" />
+                      <span>{t('voiceBot.features.cropGuidance')}</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <ChevronRight className="w-4 h-4 text-teal-600 mt-0.5 flex-shrink-0" />
+                      <span>{t('voiceBot.features.availability247')}</span>
+                    </li>
+                  </ul>
+                  <Button className="w-full bg-teal-600 hover:bg-teal-700 text-white" onClick={() => toast({ title: t('voiceBot.comingSoon'), description: t('voiceBot.subtitle') })}>
+                    {t('voiceBot.tryVoiceBot')} <ArrowRight className="w-4 h-4 ml-2" />
+                  </Button>
                 </CardContent>
               </Card>
             </div>

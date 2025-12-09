@@ -7,6 +7,11 @@
     "consumers": "ଗ୍ରାହକ",
     "admin": "ପ୍ରଶାସକ",
     "aboutUs": "ଆମ ବିଷୟରେ",
+    "services": "ସେବାଗୁଡିକ",
+    "storageServices": "ସଂରକ୍ଷଣ ସେବା",
+    "locationServices": "ଅବସ୍ଥାନ ସେବା",
+    "govSchemes": "ସରକାରୀ ଯୋଜନା",
+    "zeroLossGuides": "ଶୂନ୍ୟ-କ୍ଷତି ଗାଇଡ୍",
     "howItWorks": "ଏହା କିପରି କାମ କରେ",
     "blockchainGuide": "ବ୍ଲକ୍ଚେନ୍ ଗାଇଡ୍",
     "fairTrade": "ନ୍ୟାୟ ବ୍ୟାପାର",
@@ -27,6 +32,29 @@
     "description": "ବ୍ଲକ୍ଚେନ୍ ପ୍ରଯୁକ୍ତି ସହିତ କୃଷି ସପ୍ଲାଇ ଚେନ୍‌ରେ ପରିବର୍ତ୍ତନ ଆଣି, ଖେତରୁ ପ୍ଲେଟ୍‌ ପର୍ଯ୍ୟନ୍ତ ସ୍ୱଚ୍ଛ ମୂଲ୍ୟ ନିର୍ଦ୍ଧାରଣ ଓ ପୂର୍ଣ୍ଣ ଟ୍ରେସଏବିଲିଟି ସୁନିଶ୍ଚିତ କରୁଛି।",
     "platform": "ପ୍ଲାଟଫର୍ମ",
     "copyright": "© 2025 FarmLedge ସ୍ୱଚ୍ଛତା ପ୍ଲାଟଫର୍ମ। ସମସ୍ତ ଅଧିକାର ସୁରକ୍ଷିତ।"
+  },
+  "stats": {
+    "blockchainVerified": "ବ୍ଲକ୍ଚେନ୍ ସତ୍ୟାପିତ",
+    "totalBatches": "ମୁଠ ବ୍ୟାଚ୍",
+    "farmersRegistered": "ପଞ୍ଜୀକୃତ କୃଷକ",
+    "sustainable": "ସ୍ଥାୟୀ",
+    "verified": "ସତ୍ୟାପିତ",
+    "live": "ଲାଇଭ୍",
+    "active": "ସକ୍ରିୟ",
+    "eco": "ପରିବେଶ"
+  },
+  "howItWorks": {
+    "badge": "ଏହା କିପରି କାମ କରେ",
+    "title": "ବ୍ଲକ୍ଚେନ୍-ସଂଚାଳିତ ସ୍ୱଚ୍ଛତା",
+    "subtitle": "ସପ୍ଲାଇ ଚେନ୍ ଦୃଶ୍ୟମାନତା ସମ୍ପୂର୍ଣ୍ଣ କରିବା ପାଇଁ ଚାରିଟି ସରଳ ପଦକ୍ଷେପ",
+    "step1Title": "1. କୃଷକ ପଞ୍ଜୀକରଣ କରନ୍ତି",
+    "step1Desc": "ଅମଳ ବିବରଣୀ ସହିତ ବ୍ଲକ୍ଚେନ୍‌ରେ ବ୍ୟାଚ୍ ସୃଷ୍ଟି",
+    "step2Title": "2. ବିତରଣକାରୀ ଗ୍ରହଣ କରନ୍ତି",
+    "step2Desc": "ସ୍ୱାମିତ୍ୱ ସ୍ଥାନାନ୍ତରିତ ଏବଂ ଅନ-ଚେନ୍‌ରେ ସତ୍ୟାପିତ",
+    "step3Title": "3. ଖୁଦ୍ରା ବିକ୍ରେତା ସ୍ଟକ୍ କରନ୍ତି",
+    "step3Desc": "ଉତ୍ପାଦ ସମ୍ପୂର୍ଣ୍ଣ ଇତିହାସ ସହିତ ଖୁଦ୍ରାରେ ପହୁଁଚେ",
+    "step4Title": "4. ଗ୍ରାହକ ସତ୍ୟାପନ କରନ୍ତି",
+    "step4Desc": "ସମ୍ପୂର୍ଣ୍ଣ ଯାତ୍ରା ଦେଖିବା ପାଇଁ QR କୋଡ୍ ସ୍କ୍ୟାନ୍ କରନ୍ତୁ"
   },
   "index": {
     "title": "ସମ୍ପ୍ରତି ବ୍ୟାଚ୍",
@@ -433,9 +461,89 @@
     "method": "ପଦ୍ଧତି",
     "performanceBased": "ପ୍ରଦର୍ଶନ-ଆଧାରିତ",
     "weightDistribution": "ଓଜନ ବଣ୍ଟନ",
-    "recent": "ସାମ୍ପ୍ରତିକ",
+    "recent": "ସମ୍ପ୍ରତି",
     "longTerm": "ଦୀର୍ଘକାଳୀନ",
     "basedOn": "{{start}} ରୁ {{end}} ପର୍ଯ୍ୟନ୍ତ ଐତିହାସିକ ତଥ୍ୟ ବିଶ୍ଳେଷଣ ଉପରେ ଆଧାରିତ।",
-    "suggested": "ପରାମର୍ଶିତ: ₹{{price}} / କି.ଗ୍ରା."
+    "suggested": "ପରାମର୍ଶ ଦିଆଯାଇଛି: ₹{{price}} / କିଲୋ"
+  },
+  "cropPrediction": {
+    "badge": "ସ୍ମାର୍ଟ ଫସଲ ମୂଲ୍ୟ ପୂର୍ବାନୁମାନ",
+    "title": "ସ୍ମାର୍ଟ ଫସଲ ମୂଲ୍ୟ ପୂର୍ବାନୁମାନ",
+    "subtitle": "ଆପଣଙ୍କ ଜିଲ୍ଲାର ମାଟି ପ୍ରକାର ଉପରେ ଆଧାର କରି ରିଅଲ-ଟାଇମ୍ ମୂଲ୍ୟ ପୂର୍ବାନୁମାନ ପାଆନ୍ତୁ"
+  },
+  "storage": {
+    "badge": "ସଂରକ୍ଷଣ ସମାଧାନ",
+    "title": "ନିକଟସ୍ଥ ସଂରକ୍ଷଣ ଓ ବିକଳ୍ପ ବ୍ୟବହାର ମାମଲା",
+    "subtitle": "ସଂରକ୍ଷଣ ସୁବିଧା ଖୋଜନ୍ତୁ ଏବଂ ଅଧିକ ଉତ୍ପାଦନ ପାଇଁ ବିକଳ୍ପ ବ୍ୟବହାର ମାମଲାଗୁଡିକ ଅନ୍ବେଷଣ କରନ୍ତୁ"
+  },
+  "weather": {
+    "badge": "ଆବହା ଓ ସ୍ମାର୍ଟ ସତର୍କତା",
+    "title": "ରିଅଲ-ଟାଇମ୍ ଆବହା ଓ କୃଷି ସତର୍କତା",
+    "subtitle": "ଆବହା, ଜଳସେଚନ, ଅମଳ ଯୋଜନା, ଏବଂ ସରକାରୀ ଯୋଜନା ପାଇଁ ସମୟାନୁବର୍ତ୍ତୀ ସତର୍କତା ସହିତ ସୂଚନା ପାଆନ୍ତୁ—ସମସ୍ତ ଓଡିଶା ପାଇଁ ଟ୍ୟୁନ୍ କରାଯାଇଛି।"
+  },
+  "schemes": {
+    "badge": "ସରକାରୀ ଯୋଜନା",
+    "title": "ଯୋଜନା ସମୟସୀମା, ସହାୟତା ଓ ନବୀକରଣ",
+    "subtitle": "PMFBY, PM-KISAN, KCC, ମୃତ୍ତିକା ସ୍ୱାସ୍ଥ୍ୟ କାର୍ଡ, e-NAM, PM-FME ଏବଂ ଅଧିକ ପାଇଁ କାର୍ଯ୍ୟକ୍ଷମ ଗାଇଡ୍।"
+  },
+  "voiceBot": {
+    "badge": "AI ଭଏସ୍ ବଟ୍",
+    "title": "ଭଏସ୍ ବଟ୍ ସହାୟକ",
+    "subtitle": "କୃଷକଙ୍କ ପାଇଁ ବହୁ-ଭାଷା ଭଏସ୍ ସହାୟତା",
+    "features": {
+      "multiLanguage": "ବହୁ-ଭାଷା ସମର୍ଥନ",
+      "realtimeVoice": "ରିଅଲ୍-ଟାଇମ୍ ଭଏସ୍ ପ୍ରଶ୍ନ",
+      "cropGuidance": "ଫସଲ ମାର୍ଗଦର୍ଶନ ଏବଂ ସମର୍ଥନ",
+      "availability247": "24/7 ଉପଲବ୍ଧତା"
+    },
+    "tryVoiceBot": "ଭଏସ୍ ବଟ୍ ପରୀକ୍ଷା କରନ୍ତୁ",
+    "comingSoon": "ଶୀଘ୍ର ଆସୁଛି"
+  },
+  "solutions": {
+    "badge": "ନୀତି ପ୍ଲାଟଫର୍ମ ବୈଶିଷ୍ଟ୍ୟଗୁଡିକ",
+    "title": "ବ୍ୟାପକ କୃଷି ସମାଧାନ",
+    "subtitle": "ଅତ୍ୟାଧୁନିକ ପ୍ରଯୁକ୍ତି ଏବଂ ସରକାରୀ ସମର୍ଥିତ ସେବା ସହିତ କୃଷକଙ୍କୁ ସଶକ୍ତ କରିବା",
+    "blockchainTracking": "ବ୍ଲକ୍ଚେନ୍ ଟ୍ରାକିଂ",
+    "blockchainTrackingBadge": "ସ୍ୱଚ୍ଛତା",
+    "supplyChainTransparency": "ସପ୍ଲାଇ ଚେନ୍ ସ୍ୱଚ୍ଛତା",
+    "qrCodeGeneration": "QR କୋଡ୍ ଉତ୍ପାଦନ",
+    "immutableBlockchainRecords": "ଅପରିବର୍ତ୍ତନୀୟ ବ୍ଲକ୍ଚେନ୍ ରେକର୍ଡ",
+    "priceTransparency": "ମୂଲ୍ୟ ସ୍ୱଚ୍ଛତା",
+    "trackProduce": "ଉତ୍ପାଦ ଟ୍ରାକ୍ କରନ୍ତୁ",
+    "weatherAlerts": "ଆବହାୱା ସତର୍କତା",
+    "weatherAlertsBadge": "ରିଅଲ୍-ଟାଇମ୍",
+    "sevenDayWeatherForecasts": "୭-ଦିନିଆ ଆବହାୱା ପୂର୍ବାନୁମାନ",
+    "multiChannelAlerts": "ମଲ୍ଟି-ଚ୍ୟାନେଲ୍ ସତର୍କତା",
+    "irrigationAdvisories": "ଜଳସେଚନ ପରାମର୍ଶ",
+    "pestOutbreakAlerts": "କୀଟ ପ୍ରକୋପ ସତର୍କତା",
+    "viewWeather": "ଆବହାୱା ଦେଖନ୍ତୁ",
+    "governmentSchemes": "ସରକାରୀ ଯୋଜନା",
+    "governmentSchemesBadge": "ଲାଭ",
+    "pmKisanPmfbyKcc": "PM-KISAN, PMFBY, KCC",
+    "expiryAlerts": "ସମାପ୍ତି ସତର୍କତା",
+    "directPortalLinks": "ସିଧା ପୋର୍ଟାଲ୍ ଲିଙ୍କ୍",
+    "eligibilityChecks": "ଯୋଗ୍ୟତା ଯାଞ୍ଚ",
+    "exploreSchemes": "ଯୋଜନାଗୁଡିକ ଅନ୍ବେଷଣ କରନ୍ତୁ",
+    "storageServices": "ସଂରକ୍ଷଣ ସେବା",
+    "storageServicesBadge": "ସଂରକ୍ଷଣ",
+    "warehousesColdStorage": "ଗୋଦାମ ଏବଂ କୋଲ୍ଡ ଷ୍ଟୋରେଜ୍",
+    "alternateCropUses": "ବିକଳ୍ପ ଫସଲ ବ୍ୟବହାର",
+    "csiCftriGuidelines": "CSIR-CFTRI ନିର୍ଦ୍ଦେଶାବଳୀ",
+    "kvikTestingLabs": "KVK ଏବଂ ପରୀକ୍ଷଣ ଲାବୋରେଟୋରୀ",
+    "findStorage": "ସଂରକ୍ଷଣ ଖୋଜନ୍ତୁ",
+    "pricePrediction": "ମୂଲ୍ୟ ପୂର୍ବାନୁମାନ",
+    "pricePredictionBadge": "AI-ସଂଚାଳିତ",
+    "mlBasedPriceForecasting": "ML-ଆଧାରିତ ମୂଲ୍ୟ ପୂର୍ବାନୁମାନ",
+    "soilTypeAnalysis": "ମାଟି ପ୍ରକାର ବିଶ୍ଳେଷଣ",
+    "districtSpecificData": "ଜିଲ୍ଲା-ନିର୍ଦ୍ଦିଷ୍ଟ ତଥ୍ୟ",
+    "accuracyRate": "93% ସଠିକତା ହାର",
+    "predictPrices": "ମୂଲ୍ୟ ପୂର୍ବାନୁମାନ କରନ୍ତୁ",
+    "locationServices": "ଅବସ୍ଥାନ ସେବା",
+    "locationServicesBadge": "ନେଟୱାର୍କ",
+    "findNearbyKvks": "ନିକଟସ୍ଥ KVK ଖୋଜନ୍ତୁ",
+    "testingLaboratories": "ପରୀକ୍ଷଣ ଲାବୋରେଟୋରୀ",
+    "agriculturalCenters": "କୃଷି କେନ୍ଦ୍ର",
+    "interactiveMaps": "ଇଣ୍ଟରାକ୍ଟିଭ୍ ମାନଚିତ୍ର",
+    "exploreLocations": "ଅବସ୍ଥାନ ଅନ୍ବେଷଣ କରନ୍ତୁ"
   }
 }
