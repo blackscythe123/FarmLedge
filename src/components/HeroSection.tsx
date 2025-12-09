@@ -81,7 +81,7 @@ const HeroSection = () => {
     }
   };
   return (
-  <section id="about" className="relative min-h-[70vh] sm:min-h-screen flex items-center justify-center overflow-hidden scroll-mt-24">
+  <section id="about" className="relative min-h-[60vh] sm:min-h-[70vh] flex items-center justify-center overflow-hidden scroll-mt-24 mx-4 md:mx-6 rounded-3xl">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
         {HERO_IMAGES.map((img, index) => (
@@ -98,7 +98,7 @@ const HeroSection = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-4 py-16 sm:py-20">
+      <div className="relative z-10 container mx-auto px-6 py-12 sm:py-16">
         <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 items-center">
           
           {/* Left Column - Text Content */}
@@ -109,7 +109,7 @@ const HeroSection = () => {
                 {t("hero.badge")}
               </Badge>
               
-              <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight">
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight">
                 <span className="bg-gradient-primary bg-clip-text text-transparent">
                   {t("hero.title1")}
                 </span>
@@ -117,7 +117,7 @@ const HeroSection = () => {
                 <span className="text-foreground">{t("hero.title2")}</span>
               </h1>
               
-              <p className="text-xl text-muted-foreground leading-relaxed">
+              <p className="text-2xl text-muted-foreground leading-relaxed">
                 {t("hero.description")}
               </p>
             </div>

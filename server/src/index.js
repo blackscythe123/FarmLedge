@@ -542,10 +542,19 @@ app.get('/api/weather/current', async (req, res) => {
   try {
     const { lat, lon, lang, farmerId, batchId } = req.query
     const result = await fetchWeatherAndAlerts({ lat, lon, lang, farmerId, batchId })
+    console.log('[weather] API response structure:', {
+      hasWeather: !!result.weather,
+      hasCurrent: !!result.weather?.current,
+      currentKeys: result.weather?.current ? Object.keys(result.weather.current) : [],
+      mainData: result.weather?.current?.main,
+      windData: result.weather?.current?.wind,
+      alertsCount: result.alerts?.length || 0
+    })
     res.json({ ok: true, weather: result.weather, alerts: result.alerts })
   } catch (e) {
     const msg = e?.message || 'weather_error'
     let status = 400
+    console.error('[weather] Error:', msg, e)
     if (msg === 'OPENWEATHER_API_KEY missing') status = 500
     else if (msg === 'openweather_unauthorized') status = 401
     else if (msg === 'openweather_rate_limited') status = 429
