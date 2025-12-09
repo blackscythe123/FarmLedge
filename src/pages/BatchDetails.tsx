@@ -6,7 +6,8 @@ import { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useTranslation } from "react-i18next";
 import { Badge } from "@/components/ui/badge";
-import { IndianRupee } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { IndianRupee, Calendar as CalendarIcon, Image as ImageIcon, Maximize2 } from "lucide-react";
 import { ZeroLossPanel } from "@/components/ZeroLossPanel";
 import { DistributorIotAlerts } from "@/components/DistributorIotAlerts";
 
@@ -35,6 +36,7 @@ export default function BatchDetails() {
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<any | null>(null);
   const { t } = useTranslation();
+  const [showImage, setShowImage] = useState(false);
 
   useEffect(() => {
     const run = async () => {
@@ -106,6 +108,31 @@ export default function BatchDetails() {
 
   // Timeline Steps Configuration
   const batch = data.batch;
+
+  const getCropImage = (cropType?: string) => {
+    const key = (cropType || "").trim().toLowerCase();
+    const map: Record<string, string> = {
+      rice: "https://images.unsplash.com/photo-1504593811423-6dd665756598?q=80&w=1600&auto=format&fit=crop",
+      paddy: "https://images.unsplash.com/photo-1526318472351-c75fcf070305?q=80&w=1600&auto=format&fit=crop",
+      wheat: "https://images.unsplash.com/photo-1505051508008-923feaf53e44?q=80&w=1600&auto=format&fit=crop",
+      maize: "https://images.unsplash.com/photo-1560807707-8cc77767d783?q=80&w=1600&auto=format&fit=crop",
+      corn: "https://images.unsplash.com/photo-1560807707-8cc77767d783?q=80&w=1600&auto=format&fit=crop",
+      millet: "https://images.unsplash.com/photo-1625246333195-78a8c7e3fdfe?q=80&w=1600&auto=format&fit=crop",
+      pulses: "https://images.unsplash.com/photo-1604908554049-1ba7b4809e8a?q=80&w=1600&auto=format&fit=crop",
+      oilseeds: "https://images.unsplash.com/photo-1563208840-05f6182dc82a?q=80&w=1600&auto=format&fit=crop",
+      vegetables: "https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1600&auto=format&fit=crop",
+      fruits: "https://images.unsplash.com/photo-1502741338009-cac2772e18bc?q=80&w=1600&auto=format&fit=crop",
+      onion: "https://images.unsplash.com/photo-1508747703725-719777637510?q=80&w=1600&auto=format&fit=crop",
+      tomato: "https://images.unsplash.com/photo-1437750769460-3014ff1f44aa?q=80&w=1600&auto=format&fit=crop",
+      banana: "https://images.unsplash.com/photo-1541216970279-6c36ed0d000e?q=80&w=1600&auto=format&fit=crop",
+      potato: "https://images.unsplash.com/photo-1518977676601-b53f0b141f74?q=80&w=1600&auto=format&fit=crop",
+      brinjal: "https://images.unsplash.com/photo-1625730000972-8f3a2a8e11b9?q=80&w=1600&auto=format&fit=crop",
+      groundnut: "https://images.unsplash.com/photo-1601004890684-d8cbf98209a2?q=80&w=1600&auto=format&fit=crop",
+      cotton: "https://images.unsplash.com/photo-1535392432937-a27c36ec07c0?q=80&w=1600&auto=format&fit=crop",
+      sugarcane: "https://images.unsplash.com/photo-1629572445951-8a2ed1f7632e?q=80&w=1600&auto=format&fit=crop",
+    };
+    return map[key] || "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?q=80&w=1600&auto=format&fit=crop";
+  };
 
   // Timeline Steps Configuration
   const steps = [
@@ -205,6 +232,59 @@ export default function BatchDetails() {
             </Badge>
           </div>
         </div>
+
+        {/* Crop Image + Summary Card */}
+        <Card className="mb-12 overflow-hidden border border-slate-200 shadow-sm">
+          <CardContent className="p-0">
+            <div className="grid grid-cols-1 md:grid-cols-2">
+              <div className="relative h-56 md:h-full">
+                <img
+                  src={getCropImage(batch?.cropType)}
+                  alt={batch?.cropType || 'Crop'}
+                  className="h-full w-full object-cover"
+                  onClick={() => setShowImage(true)}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/0" />
+                <div className="absolute bottom-3 left-3 flex items-center gap-2">
+                  <Badge className="bg-white/90 text-slate-800 border-slate-200">{batch.cropType}</Badge>
+                  <Button size="sm" variant="secondary" className="bg-white/90 text-slate-800 border-slate-200 hover:bg-white" onClick={() => setShowImage(true)}>
+                    <Maximize2 className="w-4 h-4 mr-1" /> {t('batchDetails.view') || 'View'}
+                  </Button>
+                </div>
+              </div>
+              <div className="p-6 md:p-7 space-y-4">
+                <h2 className="text-xl font-semibold text-slate-900 flex items-center gap-2">
+                  <ImageIcon className="w-5 h-5 text-emerald-600" />
+                  {batch.cropType} {t('batchDetails.summary') || 'Summary'}
+                </h2>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="bg-slate-50 border border-slate-200 rounded-lg p-3">
+                    <p className="text-xs text-slate-500">{t('batchDetails.basePrice') || 'Base Price'}</p>
+                    <p className="text-lg font-semibold text-emerald-700 flex items-center gap-1">
+                      <IndianRupee className="w-4 h-4" />{(batch.basePriceINR ?? batch.minPriceINR ?? 0).toLocaleString('en-IN')}
+                    </p>
+                  </div>
+                  <div className="bg-slate-50 border border-slate-200 rounded-lg p-3">
+                    <p className="text-xs text-slate-500">{t('batchDetails.quantity') || 'Quantity'}</p>
+                    <p className="text-lg font-semibold text-slate-800">{batch.quantityKg} kg</p>
+                  </div>
+                  <div className="bg-slate-50 border border-slate-200 rounded-lg p-3">
+                    <p className="text-xs text-slate-500">{t('batchDetails.harvest') || 'Harvest'}</p>
+                    <p className="text-sm font-medium text-slate-800 flex items-center gap-1">
+                      <CalendarIcon className="w-4 h-4" />{batch.harvestDate ? new Date(batch.harvestDate * 1000).toLocaleDateString() : '-'}
+                    </p>
+                  </div>
+                  <div className="bg-slate-50 border border-slate-200 rounded-lg p-3">
+                    <p className="text-xs text-slate-500">{t('batchDetails.expires') || 'Expires'}</p>
+                    <p className="text-sm font-medium text-slate-800 flex items-center gap-1">
+                      <CalendarIcon className="w-4 h-4" />{batch.expiryDate ? new Date(batch.expiryDate * 1000).toLocaleDateString() : '-'}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
 
         {/* Parent Batch Link */}
         {batch.parentId !== 0 && (
@@ -325,6 +405,18 @@ export default function BatchDetails() {
             Actually, let's keep the fetch logic if we want to show details, but a link is cleaner. 
             I'll stick to the link for now as it's cleaner. */}
       </main>
+
+      {/* Simple Image Modal */}
+      {showImage && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4" onClick={() => setShowImage(false)}>
+          <div className="max-w-4xl w-full" onClick={(e) => e.stopPropagation()}>
+            <img src={getCropImage(batch?.cropType)} alt={batch?.cropType || 'Crop'} className="w-full h-auto rounded-lg shadow-2xl" />
+            <div className="mt-3 flex justify-end">
+              <Button variant="secondary" onClick={() => setShowImage(false)}>{t('common.close') || 'Close'}</Button>
+            </div>
+          </div>
+        </div>
+      )}
       <Footer />
     </div>
   );

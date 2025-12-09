@@ -81,7 +81,7 @@ const HeroSection = () => {
     }
   };
   return (
-  <section id="about" className="relative min-h-[70vh] sm:min-h-screen flex items-center justify-center overflow-hidden scroll-mt-24">
+  <section id="about" className="relative min-h-[60vh] sm:min-h-[70vh] flex items-center justify-center overflow-hidden scroll-mt-24 mx-4 md:mx-6 rounded-3xl">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
         {HERO_IMAGES.map((img, index) => (
@@ -98,7 +98,7 @@ const HeroSection = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-4 py-20 sm:py-28">
+      <div className="relative z-10 container mx-auto px-6 py-20 sm:py-28">
         <div className="grid lg:grid-cols-2 gap-12 sm:gap-16 items-center">
           
           {/* Left Column - Text Content */}

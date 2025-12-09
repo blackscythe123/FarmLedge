@@ -24,12 +24,12 @@ const HERO_IMAGES = [hero1, hero2, hero3, hero4];
 const CROP_IMAGES: Record<string, string> = {
   "banana": "https://images.unsplash.com/photo-1528825871115-3581a5387919?q=80&w=2070&auto=format&fit=crop",
   "banana - green": "https://images.unsplash.com/photo-1603833665858-e61d17a86224?q=80&w=2070&auto=format&fit=crop",
-  "beans": "https://images.unsplash.com/photo-1567306301408-9b74779a11af?q=80&w=2070&auto=format&fit=crop",
+  "onion-bhima shweta": "https://icar.org.in/sites/default/files/inline-images/Bhima-Shweta.jpg",
   "bitter gourd": "https://images.unsplash.com/photo-1628773822503-93038c063306?q=80&w=2070&auto=format&fit=crop",
   "brinjal": "https://images.unsplash.com/photo-1613881553903-4543f5f2cac9?q=80&w=2070&auto=format&fit=crop",
   "cabbage": "https://images.unsplash.com/photo-1591586007768-40725cc562a1?q=80&w=2110&auto=format&fit=crop",
 
-  "capsicum": "https://images.unsplash.com/photo-1563565375-f3fdf5d6c465?q=80&w=2070&auto=format&fit=crop",
+  "onion-bhima super": "https://icar.org.in/sites/default/files/inline-images/Bhima-Super.jpg",
   "carrot": "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?q=80&w=1887&auto=format&fit=crop",
   "cashewnuts": "https://images.unsplash.com/photo-1686721635333-d71af2f1084b?q=80&w=1074&auto=format&fit=crop",
   "cauliflower": "https://images.unsplash.com/photo-1568584711075-3d021a7c3ca3?q=80&w=2070&auto=format&fit=crop",
