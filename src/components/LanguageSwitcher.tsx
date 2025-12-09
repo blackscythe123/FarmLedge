@@ -25,8 +25,12 @@ const LanguageSwitcher = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="sm">
-          <Globe className="h-4 w-4 mr-2" />
+        <Button 
+          variant="ghost" 
+          size="sm" 
+          className="h-6 text-xs text-yellow-400 hover:bg-neutral-700 hover:text-yellow-300 px-2 font-bold border border-yellow-400/30"
+        >
+          <Globe className="h-3 w-3 mr-1" />
           {languages.find((lang) => lang.code === i18n.language)?.name || "English"}
         </Button>
       </DropdownMenuTrigger>

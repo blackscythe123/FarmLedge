@@ -35,6 +35,11 @@ import RetailerProfile from "./pages/profiles/RetailerProfile";
 import ConsumerProfile from "./pages/profiles/ConsumerProfile";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Verifiers from "./pages/Verifiers";
+import About from "./pages/About";
+import Structure from "./pages/Structure";
+import Directory from "./pages/Directory";
+import Tenders from "./pages/Tenders";
+import Status from "./pages/Status";
 
 const queryClient = new QueryClient();
 
@@ -49,6 +54,12 @@ const App = () => (
             <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/how-it-works" element={<HowItWorks />} />
+            
+            {/* Government Info Pages */}
+            <Route path="/about" element={<About />} />
+            <Route path="/tenders" element={<Tenders />} />
+            <Route path="/structure" element={<Structure />} />
+            <Route path="/directory" element={<Directory />} />
             <Route path="/join" element={<Join />} />
             <Route path="/login" element={<Login />} />
             <Route path="/batch" element={<BatchDetails />} />
@@ -81,6 +92,7 @@ const App = () => (
             <Route path="/blockchain-guide" element={<BlockchainGuide />} />
             <Route path="/fair-trade" element={<FairTrade />} />
             <Route path="/api-docs" element={<ApiDocs />} />
+            <Route path="/status" element={<Status />} />
             <Route path="/support" element={<Support />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
