@@ -61,8 +61,8 @@ def predict():
         
         soil_props = SOIL_PROPS.get(soil_type, {"sqi": 0.7, "ph": 6.5, "n": 0.6, "p": 0.6, "k": 0.6})
         
-        # If model loaded successfully, use it
-        if mdl is not None and mdl_cols is not None:
+        # If model loaded successfully, use it (unless it's one of the new crops not in model)
+        if mdl is not None and mdl_cols is not None and crop.lower() not in ['onion-bhima super', 'onion-bhima shweta']:
             import pandas as pd
             # Create input dataframe with enhanced features
             input_data = pd.DataFrame([{
@@ -96,7 +96,8 @@ def predict():
             base_prices = {
                 "rice": 2100, "wheat": 2200, "maize": 1900, "potato": 1200,
                 "tomato": 1400, "onion": 1500, "cabbage": 900, "banana": 1800,
-                "mango": 2500, "groundnut": 5500
+                "mango": 2500, "groundnut": 5500,
+                "onion-bhima super": 1600, "onion-bhima shweta": 1550
             }
             
             base_price = base_prices.get(crop.lower(), 2000)

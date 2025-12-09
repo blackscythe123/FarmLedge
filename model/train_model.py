@@ -25,6 +25,8 @@ CROPS = {
     "Wheat": {"base": 2400, "soil_pref": ["Alluvial", "Black"], "rain_needs": "Medium", "season": "Rabi"},
     "Maize": {"base": 2000, "soil_pref": ["Red", "Mixed Red and Yellow"], "rain_needs": "Medium", "season": "Kharif"},
     "Onion": {"base": 2500, "soil_pref": ["Red", "Black"], "rain_needs": "Medium", "season": "Rabi"},
+    "Onion-Bhima Super": {"base": 2600, "soil_pref": ["Red", "Black"], "rain_needs": "Medium", "season": "Rabi"},
+    "Onion-bhima shweta": {"base": 2550, "soil_pref": ["Red", "Black"], "rain_needs": "Medium", "season": "Rabi"},
     "Tomato": {"base": 2800, "soil_pref": ["Red", "Laterite"], "rain_needs": "Medium", "season": "All"}
 }
 
