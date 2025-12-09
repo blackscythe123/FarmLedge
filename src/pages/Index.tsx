@@ -262,8 +262,8 @@ const Index = () => {
                     <div className="w-2 h-2 bg-green-300 rounded-full animate-pulse" />
                     <span className="text-white font-medium text-sm tracking-wide">{t('hero.badge')}</span>
                   </div>
-                  <h1 className="text-5xl md:text-7xl font-black text-white mb-3 leading-none tracking-tight">
-                    FarmLedge
+                  <h1 className="text-3xl md:text-5xl font-black text-white mb-4 leading-none tracking-tight">
+                    Department of Agriculture 
                   </h1>
                   <div className="flex items-center gap-3 text-emerald-100">
                     <div className="h-px w-12 bg-emerald-300" />
