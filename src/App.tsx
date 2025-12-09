@@ -91,7 +91,7 @@ const App = () => (
             </Route>
             <Route path="/blockchain-guide" element={<BlockchainGuide />} />
             <Route path="/fair-trade" element={<FairTrade />} />
-            <Route path="/api-docs" element={<ApiDocs />} />
+            {/* <Route path="/api-docs" element={<ApiDocs />} /> API Docs removed */}
             <Route path="/status" element={<Status />} />
             <Route path="/support" element={<Support />} />
             <Route path="/privacy" element={<Privacy />} />
