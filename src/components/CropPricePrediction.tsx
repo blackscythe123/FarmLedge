@@ -43,7 +43,7 @@ interface SoilCharacteristics {
     districts: string[];
 }
 
-const CROPS = ['Rice', 'Moong', 'Brinjal', 'Groundnut', 'Cotton', 'Sugarcane', 'Wheat', 'Maize', 'Onion', 'Tomato'];
+const CROPS = ['Rice', 'Moong', 'Brinjal', 'Groundnut', 'Cotton', 'Sugarcane', 'Wheat', 'Maize', 'Onion', 'Onion-Bhima Super', 'Onion-bhima shweta', 'Tomato'];
 
 // Real crop-soil suitability data based on Odisha agricultural practices
 const CROP_SOIL_SUITABILITY = {
@@ -100,6 +100,18 @@ const CROP_SOIL_SUITABILITY = {
         good: ["Mixed Red and Black", "Laterite"],
         season: "Rabi",
         avgYield: "15-20 tons/hectare"
+    },
+    "Onion-Bhima Super": {
+        best: ["Red", "Black"],
+        good: ["Mixed Red and Black", "Laterite"],
+        season: "Rabi",
+        avgYield: "18-22 tons/hectare"
+    },
+    "Onion-bhima shweta": {
+        best: ["Red", "Black"],
+        good: ["Mixed Red and Black", "Laterite"],
+        season: "Rabi",
+        avgYield: "16-20 tons/hectare"
     },
     "Tomato": {
         best: ["Red", "Laterite"],
