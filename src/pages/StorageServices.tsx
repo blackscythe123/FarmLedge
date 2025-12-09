@@ -169,13 +169,13 @@ const StorageServices = () => {
       <section className="py-16">
         <div className="container mx-auto px-4">
           {/* Storage Finder */}
-          <Card className="p-6 bg-gradient-to-r from-amber-100 via-orange-100 to-yellow-100 border-amber-300 mb-8">
-            <h3 className="text-2xl font-bold text-amber-900 mb-4">Find Storage Facilities in Odisha</h3>
-            <div className="grid md:grid-cols-3 gap-4 mb-4">
+          <Card className="p-8 bg-gradient-to-r from-amber-100 via-orange-100 to-yellow-100 border-amber-300 mb-8 shadow-lg">
+            <h3 className="text-3xl font-bold text-amber-900 mb-6">Find Storage Facilities in Odisha</h3>
+            <div className="grid md:grid-cols-3 gap-6 mb-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Select District</label>
+                <label className="block text-base font-semibold text-gray-700 mb-3">Select District</label>
                 <select 
-                  className="w-full px-4 py-2 border border-amber-300 rounded-lg focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-5 py-3 border-2 border-amber-300 rounded-lg focus:ring-2 focus:ring-amber-500 text-base"
                   value={selectedDistrict}
                   onChange={(e) => setSelectedDistrict(e.target.value)}
                 >
@@ -185,9 +185,9 @@ const StorageServices = () => {
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Storage Type</label>
+                <label className="block text-base font-semibold text-gray-700 mb-3">Storage Type</label>
                 <select 
-                  className="w-full px-4 py-2 border border-amber-300 rounded-lg focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-5 py-3 border-2 border-amber-300 rounded-lg focus:ring-2 focus:ring-amber-500 text-base"
                   value={selectedType}
                   onChange={(e) => setSelectedType(e.target.value)}
                 >
@@ -198,8 +198,8 @@ const StorageServices = () => {
                 </select>
               </div>
               <div className="flex items-end">
-                <Button className="w-full bg-amber-600 hover:bg-amber-700" onClick={handleFindStorage}>
-                  <MapPin className="h-4 w-4 mr-2" />
+                <Button className="w-full bg-amber-600 hover:bg-amber-700 text-lg py-6" onClick={handleFindStorage}>
+                  <MapPin className="h-5 w-5 mr-3" />
                   {t('storage.findStorageNear')}
                 </Button>
               </div>
@@ -208,49 +208,90 @@ const StorageServices = () => {
 
           {/* Storage Results */}
           {showResults && (
-            <div className="mb-12">
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">
+            <div className="mb-16">
+              <h3 className="text-3xl font-bold text-gray-900 mb-8">
                 Found {filteredFacilities.length} Storage Facilities
               </h3>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredFacilities.map(facility => (
-                  <Card key={facility.id} className="p-6 hover:shadow-xl transition-shadow">
-                    <div className="flex items-start justify-between mb-3">
-                      <h4 className="text-lg font-semibold text-gray-900 leading-tight">{facility.name}</h4>
-                      <Badge className="ml-2 flex-shrink-0">{facility.type}</Badge>
-                    </div>
-                    <div className="space-y-2 text-sm text-gray-700 mb-4">
-                      <div className="flex items-start gap-2">
-                        <MapPin className="w-4 h-4 text-amber-600 mt-0.5 flex-shrink-0" />
-                        <span>{facility.address}</span>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {filteredFacilities.map(facility => {
+                  // Parse capacity and available values
+                  const capacityNum = parseInt(facility.capacity.replace(/\D/g, '')) || 0;
+                  const availableNum = parseInt(facility.available.replace(/\D/g, '')) || 0;
+                  let availabilityPercent = capacityNum > 0 ? (availableNum / capacityNum) * 100 : 0;
+                  
+                  // clamp to [0, 100]
+                  availabilityPercent = Math.max(0, Math.min(availabilityPercent, 100));
+                  
+                  // Color based on availability
+                  const fillColor =
+                    availabilityPercent > 50
+                      ? 'bg-green-500'
+                      : availabilityPercent > 25
+                        ? 'bg-yellow-500'
+                        : 'bg-red-500';
+
+                  return (
+                    <Card key={facility.id} className="p-8 hover:shadow-2xl transition-shadow shadow-lg">
+                      <div className="flex items-start justify-between mb-5">
+                        <h4 className="text-xl font-semibold text-gray-900 leading-tight">{facility.name}</h4>
+                        <Badge className="ml-2 flex-shrink-0 text-base px-3 py-1">{facility.type}</Badge>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <Package className="w-4 h-4 text-amber-600" />
-                        <span>Capacity: {facility.capacity} | Available: {facility.available}</span>
+                      
+                      {/* Availability Bar - Bottom to Top Fill */}
+                      <div className="mb-4">
+                        <div className="flex justify-between items-center mb-2">
+                          <p className="text-sm font-medium text-gray-700">Storage Availability</p>
+                          <span className="text-sm font-semibold text-gray-600">{capacityNum} MT</span>
+                        </div>
+                        <div className="w-full h-24 bg-gray-200 rounded-lg overflow-hidden border-2 border-gray-300 flex items-end justify-center relative">
+                          <div
+                            className={`w-full ${fillColor} transition-all duration-300 flex items-end justify-center`}
+                            style={{ height: `${availabilityPercent}%` }}
+                          >
+                          </div>
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="text-center">
+                              <p className="text-2xl font-bold text-gray-900">
+                                {availabilityPercent.toFixed(0)}%
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex justify-between items-center mt-2">
+                          <span className="text-xs text-gray-600">Available: {availableNum} MT</span>
+                          <span className="text-xs text-gray-600">Used: {capacityNum - availableNum} MT</span>
+                        </div>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <IndianRupee className="w-4 h-4 text-green-600" />
-                        <span className="font-semibold text-green-700">{facility.rate}</span>
+
+                      <div className="space-y-2 text-sm text-gray-700 mb-4">
+                        <div className="flex items-start gap-2">
+                          <MapPin className="w-4 h-4 text-amber-600 mt-0.5 flex-shrink-0" />
+                          <span>{facility.address}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <IndianRupee className="w-4 h-4 text-green-600" />
+                          <span className="font-semibold text-green-700">{facility.rate}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Phone className="w-4 h-4 text-blue-600" />
+                          <span>{facility.contact}</span>
+                        </div>
+                        <div className="flex items-start gap-2">
+                          <Mail className="w-4 h-4 text-blue-600 mt-0.5" />
+                          <span className="break-all">{facility.email}</span>
+                        </div>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <Phone className="w-4 h-4 text-blue-600" />
-                        <span>{facility.contact}</span>
+                      <div className="border-t pt-3">
+                        <p className="text-xs font-medium text-gray-500 mb-2">Features:</p>
+                        <div className="flex flex-wrap gap-1">
+                          {facility.features.map((feature, idx) => (
+                            <Badge key={idx} variant="outline" className="text-xs">{feature}</Badge>
+                          ))}
+                        </div>
                       </div>
-                      <div className="flex items-start gap-2">
-                        <Mail className="w-4 h-4 text-blue-600 mt-0.5" />
-                        <span className="break-all">{facility.email}</span>
-                      </div>
-                    </div>
-                    <div className="border-t pt-3">
-                      <p className="text-xs font-medium text-gray-500 mb-2">Features:</p>
-                      <div className="flex flex-wrap gap-1">
-                        {facility.features.map((feature, idx) => (
-                          <Badge key={idx} variant="outline" className="text-xs">{feature}</Badge>
-                        ))}
-                      </div>
-                    </div>
-                  </Card>
-                ))}
+                    </Card>
+                  );
+                })}
               </div>
             </div>
           )}

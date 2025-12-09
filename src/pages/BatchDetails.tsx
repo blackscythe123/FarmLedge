@@ -8,6 +8,8 @@ import { useTranslation } from "react-i18next";
 import { Badge } from "@/components/ui/badge";
 import { IndianRupee } from "lucide-react";
 import { ZeroLossPanel } from "@/components/ZeroLossPanel";
+import { DistributorIotAlerts } from "@/components/DistributorIotAlerts";
+
 
 
 
@@ -305,6 +307,17 @@ export default function BatchDetails() {
             );
           })}
         </div>
+
+      {/* Distributor IoT Alerts for this batch */}
+      <DistributorIotAlerts 
+        batchId={batch.id}
+        cropName={batch.cropType}
+        distributorContact={batch.distributorPhone || "918220318626"}
+        currentOwner={batch.currentOwner}
+        distributorAddress={batch.distributor}
+      />
+
+
 
         {/* Parent Batch Info (Hidden logic for data fetching, kept for compatibility if needed, but UI is moved up) */}
         {/* We already handled the parent link above. The original code had a separate component fetching it. 

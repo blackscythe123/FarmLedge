@@ -17,6 +17,7 @@ import { fetchWeatherAndAlerts, getAlertHistory } from './services/weatherServic
 import { listSchemes, upsertSubscription, getSubscriptions, getSubscriptionByFarmer, triggerSchemeTest } from './services/schemesService.js'
 import { listCropGuides, getCropGuideByName } from './services/cropGuidesService.js'
 import { listResources } from './services/awarenessService.js'
+import { createAlert, getAlerts } from './iotAlerts.js';
 
 // Default EOAs for testing when inputs are missing
 const DEFAULT_ADDRESSES = {
@@ -75,6 +76,40 @@ app.get("/", (req, res) => {
 
 // Add JSON parsing middleware for API routes
 app.use('/api', express.json());
+
+// Distributor IoT alerts (simulate + fetch)
+app.post('/api/distributor/iot/simulate', async (req, res) => {
+  try {
+    const { batchId, cropName, storageId, distributorContact } = req.body || {};
+
+    if (!batchId || !cropName || !storageId) {
+      return res.status(400).json({ error: 'batchId, cropName, and storageId are required' });
+    }
+
+    const alert = await createAlert({
+      batchId,
+      cropName,
+      storageId,
+      distributorContact,
+    });
+
+    return res.json({ success: true, alert });
+  } catch (error) {
+    console.error('[IoT] simulate error:', error);
+    return res.status(500).json({ error: 'Failed to simulate IoT reading' });
+  }
+});
+
+app.get('/api/distributor/iot/alerts', (req, res) => {
+  try {
+    const { batchId } = req.query;
+    const alerts = getAlerts(batchId);
+    return res.json({ alerts });
+  } catch (error) {
+    console.error('[IoT] get alerts error:', error);
+    return res.status(500).json({ error: 'Failed to fetch IoT alerts' });
+  }
+});
 
 // OpenRouteService proxy endpoint (for distributor map routing)
 app.post("/api/get-route", async (req, res) => {
@@ -1306,6 +1341,72 @@ app.post('/api/weather-alert', async (req, res) => {
     res.status(500).json({ error: 'Failed to send alert' })
   }
 })
+
+app.get("/api/user/role/:address", async (req, res) => {
+  try {
+    const { address } = req.params;
+    
+    if (!isValidAddress(address)) {
+      return res.status(400).json({ error: "invalid_address" });
+    }
+
+    if (!(await hasContractCode())) {
+      return res.status(400).json({ error: "not_a_contract", address: CONTRACT_ADDRESS });
+    }
+
+    // Check each role
+    const [farmer, verifier, distributor, retailer] = await Promise.all([
+      client.readContract({ address: CONTRACT_ADDRESS, abi: AGRI_TRUTH_CHAIN_ABI, functionName: 'farmerProfiles', args: [address] }),
+      client.readContract({ address: CONTRACT_ADDRESS, abi: AGRI_TRUTH_CHAIN_ABI, functionName: 'verifierProfiles', args: [address] }),
+      client.readContract({ address: CONTRACT_ADDRESS, abi: AGRI_TRUTH_CHAIN_ABI, functionName: 'distributorProfiles', args: [address] }),
+      client.readContract({ address: CONTRACT_ADDRESS, abi: AGRI_TRUTH_CHAIN_ABI, functionName: 'retailerProfiles', args: [address] })
+    ]);
+
+    let role = "unknown";
+    if (farmer?.isRegistered) role = "farmer";
+    else if (verifier?.isRegistered) role = "verifier";
+    else if (distributor?.isRegistered) role = "distributor";
+    else if (retailer?.isRegistered) role = "retailer";
+
+    res.json({ role, address });
+  } catch (err) {
+    console.error("Role check error:", err);
+    res.status(500).json({ error: "Failed to check role" });
+  }
+});
+
+app.get("/api/user/role/:address", async (req, res) => {
+  try {
+    const { address } = req.params;
+    
+    if (!isValidAddress(address)) {
+      return res.status(400).json({ error: "invalid_address" });
+    }
+
+    if (!(await hasContractCode())) {
+      return res.status(400).json({ error: "not_a_contract", address: CONTRACT_ADDRESS });
+    }
+
+    // Check each role
+    const [farmer, verifier, distributor, retailer] = await Promise.all([
+      client.readContract({ address: CONTRACT_ADDRESS, abi: AGRI_TRUTH_CHAIN_ABI, functionName: 'farmerProfiles', args: [address] }),
+      client.readContract({ address: CONTRACT_ADDRESS, abi: AGRI_TRUTH_CHAIN_ABI, functionName: 'verifierProfiles', args: [address] }),
+      client.readContract({ address: CONTRACT_ADDRESS, abi: AGRI_TRUTH_CHAIN_ABI, functionName: 'distributorProfiles', args: [address] }),
+      client.readContract({ address: CONTRACT_ADDRESS, abi: AGRI_TRUTH_CHAIN_ABI, functionName: 'retailerProfiles', args: [address] })
+    ]);
+
+    let role = "unknown";
+    if (farmer?.isRegistered) role = "farmer";
+    else if (verifier?.isRegistered) role = "verifier";
+    else if (distributor?.isRegistered) role = "distributor";
+    else if (retailer?.isRegistered) role = "retailer";
+
+    res.json({ role, address });
+  } catch (err) {
+    console.error("Role check error:", err);
+    res.status(500).json({ error: "Failed to check role" });
+  }
+});
 
 const PORT = process.env.PORT || 3001;
 const server = app.listen(PORT, "0.0.0.0", () => {
