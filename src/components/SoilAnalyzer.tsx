@@ -87,7 +87,7 @@ export function SoilAnalyzer() {
         'Moderate irrigation required',
         'Balanced fertilizer application'
       ];
-      suitableCrops = ['Tomatoes', 'Peppers', 'Maize', 'Beans', 'Onions'];
+      suitableCrops = ['Tomatoes', 'Peppers', 'Maize', 'Onion-bhima shweta', 'Onions'];
     } else {
       soilType = 'Mixed Soil';
       quality = 'Good';

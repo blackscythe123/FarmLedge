@@ -18,6 +18,10 @@ export default defineConfig(({ mode }) => ({
         target: "http://127.0.0.1:3001",
         changeOrigin: true,
       },
+      "/predict": {
+        target: "http://127.0.0.1:5001",
+        changeOrigin: true,
+      },
       "/webhook": {
         target: "http://127.0.0.1:3001",
         changeOrigin: true,
