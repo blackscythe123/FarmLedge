@@ -1,0 +1,92 @@
+{
+  "120101": {
+    "name": "Bhubaneswar Sadar",
+    "district": "Khordha",
+    "dominant_crop": "Vegetables / Rice",
+    "harvest_window": "Nov - Dec",
+    "soil_grade": "B",
+    "avg_yield_qt_acre": 18,
+    "secondary_crops": ["Tomato", "Brinjal", "Onion"]
+  },
+  "120102": {
+    "name": "Jatni",
+    "district": "Khordha",
+    "dominant_crop": "Rice / Groundnut",
+    "harvest_window": "Oct - Nov",
+    "soil_grade": "A",
+    "avg_yield_qt_acre": 22,
+    "secondary_crops": ["Maize", "Pulses"]
+  },
+  "120201": {
+    "name": "Puri Sadar",
+    "district": "Puri",
+    "dominant_crop": "Rice / Coconut",
+    "harvest_window": "Nov - Jan",
+    "soil_grade": "B",
+    "avg_yield_qt_acre": 20,
+    "secondary_crops": ["Vegetables", "Betel"]
+  },
+  "120301": {
+    "name": "Cuttack Sadar",
+    "district": "Cuttack",
+    "dominant_crop": "Rice / Jute",
+    "harvest_window": "Oct - Dec",
+    "soil_grade": "A",
+    "avg_yield_qt_acre": 25,
+    "secondary_crops": ["Sugarcane", "Vegetables"]
+  },
+  "120302": {
+    "name": "Banki",
+    "district": "Cuttack",
+    "dominant_crop": "Rice / Wheat",
+    "harvest_window": "Nov - Jan",
+    "soil_grade": "A",
+    "avg_yield_qt_acre": 23,
+    "secondary_crops": ["Pulses", "Oilseeds"]
+  },
+  "120401": {
+    "name": "Jagatsinghpur",
+    "district": "Jagatsinghpur",
+    "dominant_crop": "Rice / Prawn (Aqua)",
+    "harvest_window": "Oct - Nov",
+    "soil_grade": "B",
+    "avg_yield_qt_acre": 21,
+    "secondary_crops": ["Vegetables", "Betel"]
+  },
+  "120501": {
+    "name": "Kendrapara Sadar",
+    "district": "Kendrapara",
+    "dominant_crop": "Rice / Betel",
+    "harvest_window": "Nov - Dec",
+    "soil_grade": "A",
+    "avg_yield_qt_acre": 24,
+    "secondary_crops": ["Coconut", "Vegetables"]
+  },
+  "120601": {
+    "name": "Balasore Sadar",
+    "district": "Balasore",
+    "dominant_crop": "Rice / Vegetables",
+    "harvest_window": "Oct - Nov",
+    "soil_grade": "B",
+    "avg_yield_qt_acre": 19,
+    "secondary_crops": ["Groundnut", "Pulses"]
+  },
+  "120701": {
+    "name": "Baripada",
+    "district": "Mayurbhanj",
+    "dominant_crop": "Rice / Maize",
+    "harvest_window": "Nov - Dec",
+    "soil_grade": "C",
+    "avg_yield_qt_acre": 16,
+    "secondary_crops": ["Millets", "Pulses"]
+  },
+  "120801": {
+    "name": "Sambalpur",
+    "district": "Sambalpur",
+    "dominant_crop": "Rice / Cotton",
+    "harvest_window": "Oct - Dec",
+    "soil_grade": "B",
+    "avg_yield_qt_acre": 20,
+    "secondary_crops": ["Wheat", "Pulses"]
+  }
+}

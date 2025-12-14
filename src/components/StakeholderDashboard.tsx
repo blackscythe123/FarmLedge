@@ -9,8 +9,9 @@ import {
   Store, 
   Users, 
   Shield, 
-  DollarSign, 
+  IndianRupee, 
   CheckCircle, 
+
   Clock,
   BarChart3,
   Package
@@ -168,7 +169,7 @@ const StakeholderDashboard = () => {
               <Card className="p-6 shadow-medium">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="p-2 bg-success/10 rounded-lg">
-                    <DollarSign className="w-5 h-5 text-success" />
+                    <IndianRupee className="w-5 h-5 text-success" />
                   </div>
                   <h3 className="font-semibold">Set Consumer Price</h3>
                 </div>

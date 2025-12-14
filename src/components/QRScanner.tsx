@@ -10,6 +10,7 @@ import {
   Truck, 
   Store,
   DollarSign,
+  IndianRupee,  
   MapPin,
   Calendar,
   ShieldCheck
@@ -90,7 +91,7 @@ const QRScanner = () => {
               
               <div className="grid md:grid-cols-3 gap-4">
                 <div className="text-center p-4 bg-success/5 rounded-lg">
-                  <DollarSign className="w-8 h-8 text-success mx-auto mb-2" />
+                  <IndianRupee className="w-8 h-8 text-success mx-auto mb-2" />
                   <p className="font-semibold text-success">{scannedData.pricing.retailPrice}</p>
                   <p className="text-sm text-muted-foreground">Final Price</p>
                 </div>
@@ -304,7 +305,7 @@ const QRScanner = () => {
             </div>
             <div className="space-y-2">
               <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
-                <DollarSign className="w-6 h-6 text-primary" />
+                <IndianRupee className="w-6 h-6 text-primary" />
               </div>
               <p className="text-sm font-medium">Fair Trade Verified</p>
             </div>

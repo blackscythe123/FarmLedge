@@ -14,6 +14,7 @@ import Distributors from "./pages/Distributors";
 import Retailers from "./pages/Retailers";
 import Consumers from "./pages/Consumers";
 import BatchDetails from "./pages/BatchDetails";
+import PricePrediction from "./pages/PricePrediction";
 import Login from "./pages/Login";
 import BlockchainGuide from "./pages/BlockchainGuide";
 import FairTrade from "./pages/FairTrade";
@@ -22,6 +23,11 @@ import Support from "./pages/Support";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import Cookies from "./pages/Cookies";
+import WeatherAlerts from "./pages/WeatherAlerts";
+import GovSchemes from "./pages/GovSchemes";
+import FarmerGuides from "./pages/FarmerGuides";
+import StorageServices from "./pages/StorageServices";
+import LocationServices from "./pages/LocationServices";
 import { AuthProvider } from "./context/AuthContext";
 import FarmerProfile from "./pages/profiles/FarmerProfile";
 import DistributorProfile from "./pages/profiles/DistributorProfile";
@@ -46,6 +52,12 @@ const App = () => (
             <Route path="/join" element={<Join />} />
             <Route path="/login" element={<Login />} />
             <Route path="/batch" element={<BatchDetails />} />
+            <Route path="/price-prediction" element={<PricePrediction />} />
+            <Route path="/weather-alerts" element={<WeatherAlerts />} />
+            <Route path="/storage-services" element={<StorageServices />} />
+            <Route path="/location-services" element={<LocationServices />} />
+            <Route path="/gov-schemes" element={<GovSchemes />} />
+            <Route path="/farmer/guides" element={<FarmerGuides />} />
 
             <Route element={<ProtectedRoute role="farmer" />}> 
               <Route path="/farmers" element={<Farmers />} />

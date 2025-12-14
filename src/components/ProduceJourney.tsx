@@ -10,6 +10,7 @@ import {
   CheckCircle,
   Clock,
   DollarSign,
+  IndianRupee,  
   MapPin
 } from "lucide-react";
 

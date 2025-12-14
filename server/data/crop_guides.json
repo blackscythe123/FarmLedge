@@ -1,0 +1,467 @@
+[
+  {
+    "cropName": "Tomato",
+    "category": "Vegetable",
+    "shelfLife": {
+      "normal": "2-3 days at room temp",
+      "coldStorage": "7-10 days at 8-10C",
+      "daysInNumbers": { "normal": 3, "extended": 10 }
+    },
+    "zeroLossMeasures": {
+      "primary": "Shade pre-cooling within 2 hours of harvest; use ventilated crates.",
+      "secondary": [
+        "Sort and grade to remove cracked fruit.",
+        "Use perforated liners to reduce condensation."
+      ],
+      "processingOptions": [
+        { "type": "Pulp", "relatedUnits": ["Mini pulper", "Steam blancher"] },
+        { "type": "Sun-dried flakes", "relatedUnits": ["Solar dryer", "Tray dryer"] }
+      ]
+    },
+    "translations": {
+      "hi": {
+        "shelfLife": {
+          "normal": "कमरे के तापमान पर 2-3 दिन",
+          "coldStorage": "8-10 डिग्री सेल्सियस पर 7-10 दिन"
+        },
+        "zeroLossMeasures": {
+          "primary": "कटाई के 2 घंटे के भीतर छाया में प्री-कूलिंग; हवादार क्रेट का उपयोग करें।",
+          "secondary": [
+            "फटे हुए फलों को हटाने के लिए छंटाई और ग्रेडिंग करें।",
+            "संक्षेपण को कम करने के लिए छिद्रित लाइनर का उपयोग करें।"
+          ],
+          "processingOptions": [
+            { "type": "गूदा (Pulp)", "relatedUnits": ["मिनी पल्पर", "स्टीम ब्लांचर"] },
+            { "type": "धूप में सूखे गुच्छे", "relatedUnits": ["सोलर ड्रायर", "ट्रे ड्रायर"] }
+          ]
+        }
+      },
+      "or": {
+        "shelfLife": {
+          "normal": "ସାଧାରଣ ତାପମାତ୍ରାରେ ୨-୩ ଦିନ",
+          "coldStorage": "୮-୧୦ ଡିଗ୍ରୀ ସେଲସିୟସରେ ୭-୧୦ ଦିନ"
+        },
+        "zeroLossMeasures": {
+          "primary": "ଅମଳର ୨ ଘଣ୍ଟା ମଧ୍ୟରେ ଛାଇରେ ଥଣ୍ଡା କରନ୍ତୁ; ପବନ ଚଳାଚଳ କରୁଥିବା କ୍ରେଟ୍ ବ୍ୟବହାର କରନ୍ତୁ।",
+          "secondary": [
+            "ଫାଟିଯାଇଥିବା ଫଳଗୁଡ଼ିକୁ ବାହାର କରିବା ପାଇଁ ବାଛନ୍ତୁ।",
+            "ଜଳୀୟ ବାଷ୍ପ କମାଇବା ପାଇଁ କଣା ଥିବା ଲାଇନର୍ ବ୍ୟବହାର କରନ୍ତୁ।"
+          ]
+        }
+      }
+    },
+    "sellingChannels": {
+      "direct": ["Local haats", "RWBCIS-linked FPO stalls"],
+      "aggregation": ["FPO packhouse", "APMC collection point"],
+      "processing": ["Pulping unit", "Drying unit"],
+      "government": ["NHB packhouse schemes"]
+    },
+    "alternateMarkets": [
+      {
+        "marketType": "Processing grade",
+        "description": "Lower visual grade accepted for pulp.",
+        "priceRange": "70-80% of table grade",
+        "processingTime": "Same day pulping recommended"
+      }
+    ],
+    "mnregaPotential": { "eligible": true, "wasteConversionRate": "10% peel/seed to compost", "dailyWage": 250 },
+    "recommendations": [
+      "Harvest at breaker stage for transport >100km.",
+      "Use zero-cost bamboo racks for shade curing before dispatch."
+    ],
+    "ipfsDocHash": ""
+  },
+  {
+    "cropName": "Potato",
+    "category": "Vegetable",
+    "shelfLife": {
+      "normal": "7-10 days in dark, dry room",
+      "coldStorage": "60-90 days at 4-7C",
+      "daysInNumbers": { "normal": 9, "extended": 75 }
+    },
+    "zeroLossMeasures": {
+      "primary": "Cure for 10-14 days at 15-18C with airflow before storage.",
+      "secondary": [
+        "Use jute sacks with ventilation, avoid plastic bags.",
+        "Keep away from light to prevent greening."
+      ],
+      "processingOptions": [
+        { "type": "Chips", "relatedUnits": ["Peeler", "Slicer", "Batch fryer"] },
+        { "type": "Flakes", "relatedUnits": ["Blancher", "Drum dryer"] }
+      ]
+    },
+    "sellingChannels": {
+      "direct": ["Village mandi", "Haats"],
+      "aggregation": ["Cold store auctions", "FPO aggregation"],
+      "processing": ["Chips unit", "Flakes unit"],
+      "government": ["NHB cold store subsidy"]
+    },
+    "alternateMarkets": [
+      {
+        "marketType": "Seed potato",
+        "description": "Sell as planting material in nearby blocks.",
+        "priceRange": "1.2-1.5x table potato",
+        "processingTime": "Grade and bag within 3 days"
+      }
+    ],
+    "mnregaPotential": { "eligible": true, "wasteConversionRate": "5% cull to compost", "dailyWage": 250 },
+    "recommendations": [
+      "Do not wash before storage.",
+      "Stack on pallets with 15-20 cm floor clearance."
+    ],
+    "ipfsDocHash": ""
+  },
+  {
+    "cropName": "Onion",
+    "category": "Vegetable",
+    "shelfLife": {
+      "normal": "20-30 days in airy shed",
+      "coldStorage": "120-150 days at 2-4C",
+      "daysInNumbers": { "normal": 25, "extended": 135 }
+    },
+    "zeroLossMeasures": {
+      "primary": "Neck cut to 2 cm, cure 10-15 days on bamboo racks.",
+      "secondary": [
+        "Use mesh bags or kanda crates for airflow.",
+        "Avoid piling more than 50 cm height to prevent heating."
+      ],
+      "processingOptions": [
+        { "type": "Dehydrated flakes", "relatedUnits": ["Washer", "Slicer", "Tray dryer"] },
+        { "type": "Powder", "relatedUnits": ["Pulverizer", "Sifter"] }
+      ]
+    },
+    "sellingChannels": {
+      "direct": ["Village retail", "Haats"],
+      "aggregation": ["FPO godown", "APMC"],
+      "processing": ["Dehydration unit"],
+      "government": ["NHB onion storage structure"]
+    },
+    "alternateMarkets": [
+      {
+        "marketType": "Dehydration grade",
+        "description": "Smaller bulbs accepted for flakes/powder.",
+        "priceRange": "80-90% of table grade",
+        "processingTime": "Within 5 days of harvest"
+      }
+    ],
+    "mnregaPotential": { "eligible": true, "wasteConversionRate": "6% peel to compost", "dailyWage": 250 },
+    "recommendations": [
+      "Stack in wooden bins with cross ventilation.",
+      "Monitor for sprouting and remove wet bulbs weekly."
+    ],
+    "ipfsDocHash": ""
+  },
+  {
+    "cropName": "Paddy",
+    "category": "Cereal",
+    "shelfLife": {
+      "normal": "6-8 months at 12-14% moisture",
+      "coldStorage": "12+ months in sealed bins",
+      "daysInNumbers": { "normal": 210, "extended": 365 }
+    },
+    "zeroLossMeasures": {
+      "primary": "Dry to 12-14% moisture within 48 hours of threshing.",
+      "secondary": [
+        "Use tarpaulin for sun drying, stir every hour.",
+        "Store in metal bins or HDPE lined bags to prevent pests."
+      ],
+      "processingOptions": [
+        { "type": "Parboiled rice", "relatedUnits": ["Soaking tank", "Steamer", "Dryer"] },
+        { "type": "Rice bran oil", "relatedUnits": ["Expeller", "Filter press"] }
+      ]
+    },
+    "sellingChannels": {
+      "direct": ["Paddy procurement centers", "MSP mandis"],
+      "aggregation": ["FPO collection", "Mill gate"]
+    },
+    "alternateMarkets": [
+      {
+        "marketType": "Bran buyers",
+        "description": "Sell bran to oil units after milling.",
+        "priceRange": "Market linked",
+        "processingTime": "Within 30 days post-milling"
+      }
+    ],
+    "mnregaPotential": { "eligible": false, "wasteConversionRate": "Husk to briquettes possible", "dailyWage": 0 },
+    "recommendations": [
+      "Use gunny bags with pallets to avoid floor moisture.",
+      "Fumigate stacks every 45 days in humid regions."
+    ],
+    "ipfsDocHash": ""
+  },
+  {
+    "cropName": "Wheat",
+    "category": "Cereal",
+    "shelfLife": {
+      "normal": "6-8 months at <12% moisture",
+      "coldStorage": "10-12 months in sealed silos",
+      "daysInNumbers": { "normal": 210, "extended": 330 }
+    },
+    "zeroLossMeasures": {
+      "primary": "Sun dry to 12% moisture and clean before bagging.",
+      "secondary": [
+        "Use wooden pallets and cross ventilation.",
+        "Stack height not more than 20 bags to avoid caking."
+      ],
+      "processingOptions": [
+        { "type": "Whole flour", "relatedUnits": ["Grader", "Hammer mill"] },
+        { "type": "Bran for feed", "relatedUnits": ["Bran separator"] }
+      ]
+    },
+    "sellingChannels": {
+      "direct": ["MSP mandis", "Local atta chakki"],
+      "aggregation": ["FPO storage", "PDS procurement"]
+    },
+    "alternateMarkets": [
+      {
+        "marketType": "Feed grade",
+        "description": "Slightly shriveled grains acceptable for feed mills.",
+        "priceRange": "85-90% of FAQ price",
+        "processingTime": "Within 30 days"
+      }
+    ],
+    "mnregaPotential": { "eligible": false, "wasteConversionRate": "Bran to feed", "dailyWage": 0 },
+    "recommendations": [
+      "Avoid mixing old and new crop in same bin.",
+      "Use phosphine tablets with airtight cover for 7 days."
+    ],
+    "ipfsDocHash": ""
+  },
+  {
+    "cropName": "Mango",
+    "category": "Fruit",
+    "shelfLife": {
+      "normal": "5-7 days at 20-22C",
+      "coldStorage": "21-28 days at 12-14C",
+      "daysInNumbers": { "normal": 6, "extended": 24 }
+    },
+    "zeroLossMeasures": {
+      "primary": "Harvest at mature-green with clipper; avoid latex stains by inverting for 30 min.",
+      "secondary": [
+        "Use single-layer crates with paper cushioning.",
+        "Pre-cool to 12-14C within 6 hours."
+      ],
+      "processingOptions": [
+        { "type": "Pulp", "relatedUnits": ["Washer", "Pulper", "Tubular pasteurizer"] },
+        { "type": "Slices in brine", "relatedUnits": ["Blancher", "Retort"] }
+      ]
+    },
+    "sellingChannels": {
+      "direct": ["Local wholesale", "Export packhouse"],
+      "aggregation": ["FPO packhouse"],
+      "processing": ["Pulping unit", "Pickle unit"],
+      "government": ["APEDA packhouse subsidy"]
+    },
+    "alternateMarkets": [
+      {
+        "marketType": "Processing grade",
+        "description": "Windfall and spotted fruits accepted for pulp/pickle.",
+        "priceRange": "60-75% of table grade",
+        "processingTime": "Process within 48 hours"
+      }
+    ],
+    "mnregaPotential": { "eligible": true, "wasteConversionRate": "Peel/seed to compost ~12%", "dailyWage": 250 },
+    "recommendations": [
+      "Use hot-water dip at 52C for 5 min to reduce anthracnose.",
+      "Keep RH at 85-90% to avoid shriveling."
+    ],
+    "ipfsDocHash": ""
+  },
+  {
+    "cropName": "Banana",
+    "category": "Fruit",
+    "shelfLife": {
+      "normal": "4-6 days at 20-22C",
+      "coldStorage": "14-21 days at 13-14C",
+      "daysInNumbers": { "normal": 5, "extended": 18 }
+    },
+    "zeroLossMeasures": {
+      "primary": "Dehand on padded tables; wash latex and drain before packing.",
+      "secondary": [
+        "Use 7-ply cartons with liners and fingers facing down.",
+        "Ripen in ethylene room (100 ppm for 24 h) for uniform color."
+      ],
+      "processingOptions": [
+        { "type": "Chips", "relatedUnits": ["Slicer", "Blancher", "Fryer"] },
+        { "type": "Puree", "relatedUnits": ["Pulper", "Pasteurizer"] }
+      ]
+    },
+    "sellingChannels": {
+      "direct": ["Local wholesale", "Retail pushcarts"],
+      "aggregation": ["Ripening chamber", "FPO packhouse"],
+      "processing": ["Chips unit", "Puree unit"],
+      "government": ["MIDH ripening chamber subsidy"]
+    },
+    "alternateMarkets": [
+      {
+        "marketType": "Ripening centers",
+        "description": "Pre-climacteric bunches sold to ripeners.",
+        "priceRange": "Market linked",
+        "processingTime": "Deliver within 24 hours of harvest"
+      }
+    ],
+    "mnregaPotential": { "eligible": true, "wasteConversionRate": "15% peel to compost/biogas", "dailyWage": 250 },
+    "recommendations": [
+      "Maintain RH 90-95% to avoid peel splits.",
+      "Do not transport below 12C to prevent chilling injury."
+    ],
+    "ipfsDocHash": ""
+  },
+  {
+    "cropName": "Cauliflower",
+    "category": "Vegetable",
+    "shelfLife": {
+      "normal": "3-4 days at 15-18C",
+      "coldStorage": "14-21 days at 0-2C",
+      "daysInNumbers": { "normal": 4, "extended": 18 }
+    },
+    "zeroLossMeasures": {
+      "primary": "Harvest at morning, trim leaves to protect curd, cool in shade immediately.",
+      "secondary": [
+        "Use perforated poly liners inside crates for humidity.",
+        "Avoid stacking above 1 m to prevent compression."
+      ],
+      "processingOptions": [
+        { "type": "Blanched florets frozen", "relatedUnits": ["Washer", "Blancher", "Blast freezer"] },
+        { "type": "Pickle", "relatedUnits": ["Brining tank", "Retort"] }
+      ]
+    },
+    "sellingChannels": {
+      "direct": ["Haats", "Retail kiosks"],
+      "aggregation": ["FPO truck loads", "APMC"],
+      "processing": ["Freezing unit", "Pickle unit"]
+    },
+    "alternateMarkets": [
+      {
+        "marketType": "Processing grade",
+        "description": "Over-mature curds acceptable for pickles.",
+        "priceRange": "60-70% of fresh grade",
+        "processingTime": "Process within 24 hours"
+      }
+    ],
+    "mnregaPotential": { "eligible": true, "wasteConversionRate": "10% leaves to compost", "dailyWage": 250 },
+    "recommendations": [
+      "Keep curds white by avoiding direct sun after harvest.",
+      "Maintain RH 95% in cold storage to prevent wilting."
+    ],
+    "ipfsDocHash": ""
+  },
+  {
+    "cropName": "Green Chili",
+    "category": "Vegetable",
+    "shelfLife": {
+      "normal": "2-4 days at ambient",
+      "coldStorage": "14-18 days at 7-8C",
+      "daysInNumbers": { "normal": 3, "extended": 16 }
+    },
+    "zeroLossMeasures": {
+      "primary": "Harvest with 1-2 cm stem, avoid bruising; pre-cool in shade.",
+      "secondary": [
+        "Use ventilated crates lined with newspaper.",
+        "Do not sprinkle water on pods; use humidification pads instead."
+      ],
+      "processingOptions": [
+        { "type": "Dehydrated chili", "relatedUnits": ["Solar dryer", "Tray dryer"] },
+        { "type": "Pickle", "relatedUnits": ["Fermentation jar", "Retort"] }
+      ]
+    },
+    "sellingChannels": {
+      "direct": ["Retail carts", "Haats"],
+      "aggregation": ["FPO grading center", "APMC"],
+      "processing": ["Drying unit", "Pickle unit"]
+    },
+    "alternateMarkets": [
+      {
+        "marketType": "Dry chili processors",
+        "description": "Sun or tray-dried pods bought by spice mills.",
+        "priceRange": "Value-added after drying",
+        "processingTime": "Dry within 24 hours of harvest"
+      }
+    ],
+    "mnregaPotential": { "eligible": true, "wasteConversionRate": "5% pedicel to compost", "dailyWage": 250 },
+    "recommendations": [
+      "Maintain RH 90-95% during cold storage to prevent shriveling.",
+      "Avoid ethylene exposure; store away from ripening bananas."
+    ],
+    "ipfsDocHash": ""
+  },
+  {
+    "cropName": "Pomegranate",
+    "category": "Fruit",
+    "shelfLife": {
+      "normal": "10-15 days at 18-20C",
+      "coldStorage": "60-90 days at 5-7C",
+      "daysInNumbers": { "normal": 12, "extended": 75 }
+    },
+    "zeroLossMeasures": {
+      "primary": "Harvest with secateurs; keep calyx intact; avoid sun exposure after harvest.",
+      "secondary": [
+        "Use foam netting in crates to reduce abrasions.",
+        "Pre-cool with forced air to 8C within 6 hours."
+      ],
+      "processingOptions": [
+        { "type": "Aril cups", "relatedUnits": ["Aril extractor", "Washer", "MAP sealer"] },
+        { "type": "Juice", "relatedUnits": ["Crusher", "Plate filter", "Pasteurizer"] }
+      ]
+    },
+    "sellingChannels": {
+      "direct": ["Retail counters", "Export packhouse"],
+      "aggregation": ["FPO packhouse"],
+      "processing": ["Aril packing", "Juice unit"],
+      "government": ["APEDA packhouse assistance"]
+    },
+    "alternateMarkets": [
+      {
+        "marketType": "Juice grade",
+        "description": "Sunburnt or cracked fruits accepted for juice.",
+        "priceRange": "65-80% of table grade",
+        "processingTime": "Process within 72 hours"
+      }
+    ],
+    "mnregaPotential": { "eligible": true, "wasteConversionRate": "10% rind to compost", "dailyWage": 250 },
+    "recommendations": [
+      "Maintain RH 90-95% in cold rooms.",
+      "Use sulfur pads cautiously to control molds if exporting."
+    ],
+    "ipfsDocHash": ""
+  },
+  {
+    "cropName": "Turmeric",
+    "category": "Spice",
+    "shelfLife": {
+      "normal": "60-90 days as raw rhizome",
+      "coldStorage": "120-150 days at 12-14C",
+      "daysInNumbers": { "normal": 80, "extended": 135 }
+    },
+    "zeroLossMeasures": {
+      "primary": "Cure rhizomes for 7-10 days in shade with good airflow.",
+      "secondary": [
+        "Use bamboo mats or crates, avoid direct floor contact.",
+        "Boil for 45-60 min before drying to fix color."
+      ],
+      "processingOptions": [
+        { "type": "Dried finger", "relatedUnits": ["Boiling pan", "Solar dryer"] },
+        { "type": "Powder", "relatedUnits": ["Pulverizer", "Sifter"] }
+      ]
+    },
+    "sellingChannels": {
+      "direct": ["Local spice traders", "Haats"],
+      "aggregation": ["FPO collection", "APMC"],
+      "processing": ["Boiling/drying unit", "Powder unit"]
+    },
+    "alternateMarkets": [
+      {
+        "marketType": "Industrial dye",
+        "description": "Lower grade accepted for dye/extract buyers.",
+        "priceRange": "70-85% of culinary grade",
+        "processingTime": "Dry and powder within 10 days"
+      }
+    ],
+    "mnregaPotential": { "eligible": true, "wasteConversionRate": "5% peel to compost", "dailyWage": 250 },
+    "recommendations": [
+      "Polish dried fingers to improve appearance.",
+      "Store powder in moisture-proof bags; add desiccant if humid."
+    ],
+    "ipfsDocHash": ""
+  }
+]

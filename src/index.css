@@ -2,82 +2,41 @@
 @tailwind components;
 @tailwind utilities;
 
-/* FarmLedge Design System - Agricultural transparency theme with natural colors
-All colors MUST be HSL.
-*/
-
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 160 15% 15%;
+    /* Background: Stone 50 */
+    --background: 60 9% 98%;
+    --foreground: 215 19% 35%; /* Slate 600 for body text */
 
     --card: 0 0% 100%;
-    --card-foreground: 160 15% 15%;
+    --card-foreground: 215 19% 35%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 160 15% 15%;
+    --popover-foreground: 215 19% 35%;
 
-    /* Agricultural green primary palette */
-    --primary: 145 65% 35%;
+    /* Primary: Emerald 900 (Deep Forest Green) */
+    --primary: 164 86% 16%;
     --primary-foreground: 0 0% 98%;
-    --primary-light: 145 55% 45%;
-    --primary-dark: 145 75% 25%;
 
-    /* Earth tone secondary palette */
-    --secondary: 35 25% 90%;
-    --secondary-foreground: 160 15% 15%;
+    /* Secondary: Slate 600 (Cool Gray) */
+    --secondary: 215 19% 35%;
+    --secondary-foreground: 0 0% 98%;
 
-    --muted: 145 15% 95%;
-    --muted-foreground: 160 10% 45%;
+    --muted: 60 5% 96%;
+    --muted-foreground: 215 16% 47%;
 
-    /* Fresh accent colors */
-    --accent: 85 65% 88%;
-    --accent-foreground: 160 15% 15%;
-
-    /* Trust/verification colors */
-    --success: 145 65% 35%;
-    --success-foreground: 0 0% 98%;
-    --warning: 45 95% 50%;
-    --warning-foreground: 0 0% 15%;
+    /* Accent: Amber 600 (Goldenrod) */
+    --accent: 38 92% 50%;
+    --accent-foreground: 0 0% 98%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 145 20% 85%;
-    --input: 145 20% 90%;
-    --ring: 145 65% 35%;
-
-    /* Agricultural gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-light)));
-    --gradient-earth: linear-gradient(180deg, hsl(var(--accent)), hsl(var(--secondary)));
-    --gradient-fresh: linear-gradient(45deg, hsl(145 75% 85%), hsl(85 65% 88%));
-
-    /* Shadows with earth tones */
-    --shadow-soft: 0 4px 20px hsl(145 25% 15% / 0.08);
-    --shadow-medium: 0 8px 30px hsl(145 25% 15% / 0.12);
-    --shadow-strong: 0 12px 40px hsl(145 25% 15% / 0.16);
-
-    /* Animations */
-    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-spring: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 164 86% 16%;
 
     --radius: 0.5rem;
-
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
   .dark {
@@ -108,14 +67,6 @@ All colors MUST be HSL.
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
 
@@ -123,12 +74,18 @@ All colors MUST be HSL.
   * {
     @apply border-border;
   }
-
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans antialiased;
   }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif text-emerald-900;
+  }
+}
 
-  html {
-    scroll-behavior: smooth;
-  }
+/* Custom Font Families */
+.font-sans {
+  font-family: 'Inter', sans-serif;
+}
+.font-serif {
+  font-family: 'Merriweather', serif;
 }

@@ -11,15 +11,19 @@ export default defineConfig(({ mode }) => ({
     port: 8000,
     proxy: {
       "/api": {
-        target: "http://localhost:3001",
+        target: "http://127.0.0.1:3001",
         changeOrigin: true,
       },
       "/create-checkout-session": {
-        target: "http://localhost:3001",
+        target: "http://127.0.0.1:3001",
+        changeOrigin: true,
+      },
+      "/predict": {
+        target: "http://127.0.0.1:5001",
         changeOrigin: true,
       },
       "/webhook": {
-        target: "http://localhost:3001",
+        target: "http://127.0.0.1:3001",
         changeOrigin: true,
       },
     },

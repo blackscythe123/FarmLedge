@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-/// @title AgriTruthChain V2 - Registry with relayer support and verified-payment transfers
+/// @title AgriTruthChain V3 - Registry with batch splitting support
 contract AgriTruthChain {
     struct Batch {
         uint256 id;
@@ -12,14 +12,14 @@ contract AgriTruthChain {
         address consumer;
         string cropType;
         uint256 quantityKg;
-    uint256 basePriceINR; // rupees (whole)
+        uint256 basePriceINR; // rupees (whole)
         uint64 harvestDate;
         string metadataCID;
         uint256 createdAt;
         bool exists;
-    uint256 minPriceINR; // rupees (whole)
-    uint256 priceByDistributorINR; // rupees (whole)
-    uint256 priceByRetailerINR;    // rupees (whole)
+        uint256 minPriceINR; // rupees (whole)
+        uint256 priceByDistributorINR; // rupees (whole)
+        uint256 priceByRetailerINR;    // rupees (whole)
         uint256 boughtByDistributorAt;
         uint256 boughtByRetailerAt;
         uint256 boughtByConsumerAt;
@@ -27,23 +27,29 @@ contract AgriTruthChain {
         uint8 verificationStatus; // 0 = unverified, 1 = pending, 2 = verified
         address verificationBy;
         uint256 verificationAt;
+        // Splitting fields
+        uint256 parentId; // 0 if root
+        bool isSplit;
+        uint64 expiryDate;
+        string verificationMetadataCID;
     }
 
     uint256 public nextBatchId = 1;
     mapping(uint256 => Batch) public batches;
-    // shipments and payments removed
 
     address public owner;
-    mapping(address => bool) public verifiers; // retained for future use
+    mapping(address => bool) public verifiers;
 
-    event BatchRegistered(uint256 indexed batchId, address indexed farmer, string cropType, uint256 quantityKg, uint256 basePriceINR, uint64 harvestDate, string metadataCID);
+    event BatchRegistered(uint256 indexed batchId, address indexed farmer, string cropType, uint256 quantityKg, uint256 basePriceINR, uint64 harvestDate, string metadataCID, uint64 expiryDate);
     event OwnershipTransferred(uint256 indexed batchId, address indexed from, address indexed to);
     event VerifierSet(address indexed verifier, bool allowed);
-    // pricing, shipment, payment events removed
     event PricesUpdatedINR(uint256 indexed batchId, uint256 minPriceINR, uint256 priceByDistributorINR, uint256 priceByRetailerINR);
-    event VerificationStatusUpdated(uint256 indexed batchId, uint8 status, address indexed by, uint256 at);
+    event VerificationStatusUpdated(uint256 indexed batchId, uint8 status, address indexed by, uint256 at, string verificationMetadataCID);
+    event BatchSplit(uint256 indexed parentId, uint256 indexed newBatchId, uint256 quantity);
 
     modifier onlyOwner() { require(msg.sender == owner, "not-owner"); _; }
+
+    uint256[] public batchIds;
 
     constructor(address _owner) {
         owner = _owner == address(0) ? msg.sender : _owner;
@@ -54,66 +60,68 @@ contract AgriTruthChain {
         emit VerifierSet(account, allowed);
     }
 
-    // Internal implementation shared by both registration functions
     function _registerBatch(
         address farmer,
         string calldata cropType,
         uint256 quantityKg,
-    uint256 basePriceINR,
+        uint256 basePriceINR,
         uint64 harvestDate,
-        string calldata metadataCID
+        string calldata metadataCID,
+        uint64 expiryDate
     ) internal returns (uint256 batchId) {
         require(farmer != address(0), "bad-farmer");
         batchId = nextBatchId++;
-        batches[batchId] = Batch({
-            id: batchId,
-            currentOwner: farmer,
-            farmer: farmer,
-            distributor: address(0),
-            retailer: address(0),
-            consumer: address(0),
-            cropType: cropType,
-            quantityKg: quantityKg,
-            basePriceINR: basePriceINR,
-            harvestDate: harvestDate,   
-            metadataCID: metadataCID,
-            createdAt: block.timestamp,
-            exists: true,
-            minPriceINR: 0,
-            priceByDistributorINR: 0,
-            priceByRetailerINR: 0,
-            boughtByDistributorAt: 0,
-            boughtByRetailerAt: 0,
-            boughtByConsumerAt: 0,
-            verificationStatus: 0,
-            verificationBy: address(0),
-            verificationAt: 0
-        });
+        Batch storage b = batches[batchId];
+        b.id = batchId;
+        b.currentOwner = farmer;
+        b.farmer = farmer;
+        b.distributor = address(0);
+        b.retailer = address(0);
+        b.consumer = address(0);
+        b.cropType = cropType;
+        b.quantityKg = quantityKg;
+        b.basePriceINR = basePriceINR;
+        b.harvestDate = harvestDate;
+        b.metadataCID = metadataCID;
+        b.createdAt = block.timestamp;
+        b.exists = true;
+        b.minPriceINR = 0;
+        b.priceByDistributorINR = 0;
+        b.priceByRetailerINR = 0;
+        b.boughtByDistributorAt = 0;
+        b.boughtByRetailerAt = 0;
+        b.boughtByConsumerAt = 0;
+        b.verificationStatus = 0;
+        b.verificationBy = address(0);
+        b.verificationAt = 0;
+        b.parentId = 0;
+        b.isSplit = false;
+        b.expiryDate = expiryDate;
         batchIds.push(batchId);
-        emit BatchRegistered(batchId, farmer, cropType, quantityKg, basePriceINR, harvestDate, metadataCID);
+        emit BatchRegistered(batchId, farmer, cropType, quantityKg, basePriceINR, harvestDate, metadataCID, expiryDate);
     }
 
-    // Relayer-friendly registration: farmer address is provided explicitly.
     function registerBatchFor(
         address farmer,
         string calldata cropType,
         uint256 quantityKg,
-    uint256 basePriceINR,
+        uint256 basePriceINR,
         uint64 harvestDate,
-        string calldata metadataCID
+        string calldata metadataCID,
+        uint64 expiryDate
     ) external returns (uint256 batchId) {
-    return _registerBatch(farmer, cropType, quantityKg, basePriceINR, harvestDate, metadataCID);
+        return _registerBatch(farmer, cropType, quantityKg, basePriceINR, harvestDate, metadataCID, expiryDate);
     }
 
-    // Backward-compat simple register (farmer = msg.sender)
     function registerBatch(
         string calldata cropType,
         uint256 quantityKg,
-    uint256 basePriceINR,
+        uint256 basePriceINR,
         uint64 harvestDate,
-        string calldata metadataCID
+        string calldata metadataCID,
+        uint64 expiryDate
     ) external returns (uint256 batchId) {
-    return _registerBatch(msg.sender, cropType, quantityKg, basePriceINR, harvestDate, metadataCID);
+        return _registerBatch(msg.sender, cropType, quantityKg, basePriceINR, harvestDate, metadataCID, expiryDate);
     }
 
     function transferOwnership(uint256 batchId, address to) external {
@@ -123,12 +131,10 @@ contract AgriTruthChain {
         _updateOwner(batchId, to);
     }
 
-
     function _updateOwner(uint256 batchId, address to) internal {
         Batch storage b = batches[batchId];
         address prev = b.currentOwner;
         b.currentOwner = to;
-        // Stage progression and timestamps
         if (b.distributor == address(0) && to != b.farmer) {
             b.distributor = to;
             b.boughtByDistributorAt = block.timestamp;
@@ -142,15 +148,12 @@ contract AgriTruthChain {
         emit OwnershipTransferred(batchId, prev, to);
     }
 
-    // Verifier/owner can transfer on behalf of current owner (used by webhook/relayer)
     function transferOwnershipByVerifier(uint256 batchId, address to) external {
         require(verifiers[msg.sender] || msg.sender == owner, "not-verifier");
         _updateOwner(batchId, to);
     }
 
-    // Set verification status: only owner contract admin or authorized verifiers
-    // status: 0 = unverified, 1 = pending, 2 = verified
-    function setVerificationStatus(uint256 batchId, uint8 status) external {
+    function setVerificationStatus(uint256 batchId, uint8 status, string calldata verificationMetadataCID, uint256 verifiedQuantity) external {
         require(verifiers[msg.sender] || msg.sender == owner, "not-verifier");
         require(status <= 2, "bad-status");
         Batch storage b = batches[batchId];
@@ -158,22 +161,25 @@ contract AgriTruthChain {
         b.verificationStatus = status;
         b.verificationBy = msg.sender;
         b.verificationAt = block.timestamp;
-        emit VerificationStatusUpdated(batchId, status, msg.sender, block.timestamp);
+        b.verificationMetadataCID = verificationMetadataCID;
+
+        if (verifiedQuantity > 0 && verifiedQuantity != b.quantityKg) {
+            b.quantityKg = verifiedQuantity;
+        }
+
+        emit VerificationStatusUpdated(batchId, status, msg.sender, block.timestamp, verificationMetadataCID);
     }
 
-    function getVerification(uint256 batchId) external view returns (uint8 status, address by, uint256 at) {
+    function getVerification(uint256 batchId) external view returns (uint8 status, address by, uint256 at, string memory verificationMetadataCID) {
         Batch storage b = batches[batchId];
         require(b.exists, "batch-not-found");
-        return (b.verificationStatus, b.verificationBy, b.verificationAt);
+        return (b.verificationStatus, b.verificationBy, b.verificationAt, b.verificationMetadataCID);
     }
 
+    function getAllBatchIds() external view returns (uint256[] memory) { 
+        return batchIds; 
+    }
 
-    uint256[] public batchIds;
-    function getAllBatchIds() external view returns (uint256[] memory) { return batchIds; }
-
-    // payments, shipments, pricing removed from contract interface
-
-    // INR pricing setters
     function setMinPriceInr(uint256 batchId, uint256 minPriceINR_) external {
         Batch storage b = batches[batchId];
         require(b.exists, "batch-not-found");
@@ -196,5 +202,80 @@ contract AgriTruthChain {
         require(b.retailer == msg.sender || verifiers[msg.sender] || msg.sender == owner, "not-authorized");
         b.priceByRetailerINR = price;
         emit PricesUpdatedINR(batchId, b.minPriceINR, b.priceByDistributorINR, b.priceByRetailerINR);
+    }
+
+    // Split a batch into a new child batch with proportional pricing and role assignment
+    function splitBatchByVerifier(uint256 parentBatchId, uint256 splitQuantity, address newOwner) external returns (uint256 newBatchId) {
+        require(verifiers[msg.sender] || msg.sender == owner, "not-verifier");
+        Batch storage parent = batches[parentBatchId];
+        require(parent.exists, "parent-not-found");
+        require(parent.quantityKg > splitQuantity, "insufficient-quantity");
+        require(splitQuantity > 0, "invalid-split-quantity");
+        require(newOwner != address(0), "invalid-new-owner");
+
+        // Calculate proportional prices for the child batch
+        uint256 originalQuantity = parent.quantityKg;
+        uint256 childBasePriceINR = parent.basePriceINR;
+        uint256 childMinPriceINR = parent.minPriceINR;
+
+        // Decrement parent quantity
+        parent.quantityKg -= splitQuantity;
+
+        // Create child batch
+        newBatchId = nextBatchId++;
+        Batch storage child = batches[newBatchId];
+        child.id = newBatchId;
+        child.currentOwner = newOwner;
+        child.farmer = parent.farmer;
+        
+        // Set buyer role based on parent's current holder
+        if (parent.currentOwner == parent.farmer) {
+            // Farmer selling to Distributor
+            child.distributor = newOwner;
+            child.retailer = address(0);
+            child.consumer = address(0);
+            child.boughtByDistributorAt = block.timestamp;
+            child.boughtByRetailerAt = 0;
+            child.boughtByConsumerAt = 0;
+        } else if (parent.distributor != address(0) && parent.retailer == address(0)) {
+            // Distributor selling to Retailer
+            child.distributor = parent.distributor;
+            child.retailer = newOwner;
+            child.consumer = address(0);
+            child.boughtByDistributorAt = parent.boughtByDistributorAt;
+            child.boughtByRetailerAt = block.timestamp;
+            child.boughtByConsumerAt = 0;
+        } else {
+            // Retailer selling to Consumer
+            child.distributor = parent.distributor;
+            child.retailer = parent.retailer;
+            child.consumer = newOwner;
+            child.boughtByDistributorAt = parent.boughtByDistributorAt;
+            child.boughtByRetailerAt = parent.boughtByRetailerAt;
+            child.boughtByConsumerAt = block.timestamp;
+        }
+        
+        child.cropType = parent.cropType;
+        child.quantityKg = splitQuantity;
+        child.basePriceINR = childBasePriceINR;
+        child.harvestDate = parent.harvestDate;
+        child.metadataCID = parent.metadataCID;
+        child.createdAt = block.timestamp;
+        child.exists = true;
+        child.minPriceINR = childMinPriceINR;
+        child.priceByDistributorINR = 0;
+        child.priceByRetailerINR = 0;
+        child.verificationStatus = parent.verificationStatus;
+        child.verificationBy = parent.verificationBy;
+        child.verificationAt = parent.verificationAt;
+        child.parentId = parentBatchId;
+        child.isSplit = true;
+        child.expiryDate = parent.expiryDate;
+        
+        batchIds.push(newBatchId);
+        emit BatchSplit(parentBatchId, newBatchId, splitQuantity);
+        emit OwnershipTransferred(newBatchId, parent.currentOwner, newOwner);
+        
+        return newBatchId;
     }
 }

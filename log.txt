@@ -1,0 +1,147 @@
+# FarmLedge System Documentation
+
+## 1. Overview
+FarmLedge is a blockchain-based supply chain management platform connecting Farmers, Distributors, Retailers, and Consumers. It ensures transparency, traceability, and fair pricing using the Arbitrum Sepolia testnet.
+
+## 2. Technical Architecture
+
+### Frontend
+- **Framework**: React (Vite)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS + Shadcn UI
+- **State Management**: React Query, Context API (Auth)
+- **Web3 Integration**: Wagmi + Viem
+- **IPFS**: Pinata (for off-chain metadata)
+
+### Backend
+- **Runtime**: Node.js
+- **Framework**: Express.js
+- **Database**: None (Stateless, relies on Blockchain + Event Logs)
+- **Blockchain Interaction**: Viem (Read/Write Smart Contract)
+- **Payments**: Stripe API
+
+### Blockchain
+- **Network**: Arbitrum Sepolia
+- **Contract**: `AgriTruthChain.sol`
+- **Key Features**: Batch Registration, Ownership Transfer, Batch Splitting, Price Tracking, Verification.
+
+## 3. User Roles & Flows
+
+### A. Farmer
+1.  **Register Batch**:
+    - **Page**: `/farmers`
+    - **Action**: Fills form (Crop, Qty, Price, Harvest Date, Expiry Date, Description, Location).
+    - **Process**:
+        1.  Frontend uploads metadata (Description, Location) to IPFS via Pinata.
+        2.  Frontend calls Backend API `/api/register-batch`.
+        3.  Backend sends transaction to Smart Contract (`registerBatchFor`).
+    - **Result**: New Batch ID created on-chain.
+
+2.  **View Batches**:
+    - **Page**: `/farmers`
+    - **Action**: Lists batches owned by the farmer.
+    - **Data Source**: Backend API `/api/batches?currentOwner=...`.
+
+### B. Distributor
+1.  **Marketplace**:
+    - **Page**: `/distributors`
+    - **Action**: View available batches from Farmers.
+    - **Data Source**: Backend API `/api/batches`.
+2.  **Buy Batch**:
+    - **Action**: Click "Buy".
+    - **Process**:
+        1.  Frontend calls `/create-checkout-session` (Stripe).
+        2.  User pays via Stripe.
+        3.  Stripe Webhook calls Backend `/webhook`.
+        4.  Backend verifies payment and calls Contract `transferOwnershipByVerifier`.
+3.  **Split Batch**:
+    - **Action**: Split a large batch into smaller quantities for resale.
+    - **Process**:
+        1.  Frontend calls `/create-checkout-session` with `isSplit: true`.
+        2.  Backend calls Contract `splitBatchByVerifier`.
+        3.  New "Child Batch" created with reduced quantity; Parent Batch quantity reduced.
+
+### C. Retailer
+1.  **Marketplace**:
+    - **Page**: `/retailers`
+    - **Action**: Buy batches from Distributors.
+2.  **Buy Batch**: Similar flow to Distributor (Stripe -> Webhook -> Transfer).
+
+### D. Consumer
+1.  **Marketplace**:
+    - **Page**: `/consumers`
+    - **Action**: Buy final products from Retailers.
+2.  **Traceability**:
+    - **Page**: `/batch?id=...`
+    - **Action**: View full history (Farmer -> Distributor -> Retailer -> Consumer), prices at each stage, and verification status.
+
+## 4. API Documentation
+
+### Base URL: `http://localhost:3001`
+
+#### `GET /api/batches`
+- **Purpose**: Fetch list of batches.
+- **Query Params**:
+    - `limit`: Number of items (default: all).
+    - `page`: Page number.
+    - `farmer`: Filter by farmer address.
+    - `currentOwner`: Filter by current owner address.
+- **Response**: JSON array of batch objects (enriched with blockchain data).
+
+#### `POST /api/register-batch`
+- **Purpose**: Register a new batch on-chain.
+- **Body**:
+    - `cropType`: String
+    - `quantityKg`: Number
+    - `basePriceINR`: Number
+    - `harvestDate`: Unix Timestamp
+    - `expiryDate`: Unix Timestamp
+    - `metadataCID`: IPFS Hash
+    - `farmerAddress`: Ethereum Address
+- **Process**: Uses Relayer wallet to execute `registerBatchFor` on-chain.
+
+#### `POST /create-checkout-session`
+- **Purpose**: Initiate Stripe payment.
+- **Body**:
+    - `lineItems`: Array of products.
+    - `metadata`: Object containing `batchId`, `role`, `toAddress`, `isSplit`, `splitQuantity`.
+- **Response**: Stripe Session URL.
+
+#### `POST /webhook`
+- **Purpose**: Handle Stripe events.
+- **Event**: `checkout.session.completed`
+- **Process**:
+    - Verifies payment.
+    - Executes Blockchain Transaction (Transfer or Split) via Relayer.
+
+#### `GET /api/relayer-status`
+- **Purpose**: Check if backend wallet is configured.
+
+## 5. Smart Contract (`AgriTruthChain.sol`)
+
+### Key Structs
+- **Batch**:
+    - `id`: Unique ID
+    - `currentOwner`: Address
+    - `quantityKg`: Remaining quantity
+    - `basePriceINR`: Original price
+    - `minPriceINR`: Current minimum price
+    - `parentId`: ID of parent batch (if split)
+    - `isSplit`: Boolean
+    - `expiryDate`: Timestamp
+
+### Key Functions
+- `registerBatchFor`: Create new batch.
+- `transferOwnershipByVerifier`: Move batch to new owner (after payment).
+- `splitBatchByVerifier`: Create child batch and update parent.
+- `setVerificationStatus`: Mark batch as Verified/Unverified.
+
+## 6. Key Files
+
+- **Frontend Entry**: `src/main.tsx`
+- **Routing**: `src/App.tsx`
+- **Pages**: `src/pages/*.tsx`
+- **IPFS Utility**: `src/lib/ipfs.ts`
+- **Wagmi Config**: `src/lib/wagmi.ts`
+- **Server Entry**: `server/src/index.js`
+- **Contract ABI**: `server/src/contract.js`

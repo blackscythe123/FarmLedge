@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -13,13 +13,27 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Leaf, Shield, Eye, QrCode, Copy, Link as LinkIcon, Download } from "lucide-react";
-import heroImage from "@/assets/hero-agriculture.jpg";
+import hero1 from "@/assets/hero1.jpg";
+import hero2 from "@/assets/hero2.jpg";
+import hero3 from "@/assets/hero3.jpg";
+import hero4 from "@/assets/hero4.jpg";
 import { useTranslation } from "react-i18next";
 import { QRCodeCanvas } from "qrcode.react";
 import { useToast } from "@/components/ui/use-toast";
 
+const HERO_IMAGES = [hero1, hero2, hero3, hero4];
+
 const HeroSection = () => {
   const { t } = useTranslation();
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % HERO_IMAGES.length);
+    }, 5000); // Switch every 5 seconds
+
+    return () => clearInterval(interval);
+  }, []);
 
   // QR Modal state
   const [qrOpen, setQrOpen] = useState(false);
@@ -67,30 +81,35 @@ const HeroSection = () => {
     }
   };
   return (
-  <section id="about" className="relative min-h-[70vh] sm:min-h-screen flex items-center justify-center overflow-hidden scroll-mt-24">
+  <section id="about" className="relative min-h-[60vh] sm:min-h-[70vh] flex items-center justify-center overflow-hidden scroll-mt-24 mx-4 md:mx-6 rounded-3xl">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
-        <img 
-          src={heroImage} 
-          alt="Agricultural transparency from farm to consumer"
-          className="w-full h-full object-cover"
-        />
+        {HERO_IMAGES.map((img, index) => (
+          <img 
+            key={img}
+            src={img} 
+            alt="Agricultural transparency from farm to consumer"
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${
+              index === currentImageIndex ? "opacity-100" : "opacity-0"
+            }`}
+          />
+        ))}
         <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/80 to-background/60" />
       </div>
 
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-4 py-16 sm:py-20">
-        <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 items-center">
+      <div className="relative z-10 container mx-auto px-6 py-20 sm:py-28">
+        <div className="grid lg:grid-cols-2 gap-12 sm:gap-16 items-center">
           
           {/* Left Column - Text Content */}
-          <div className="space-y-8 animate-fade-in">
-            <div className="space-y-4">
-              <Badge className="bg-primary/10 text-primary border-primary/20 hover:bg-primary/20">
-                <Leaf className="w-4 h-4 mr-2" />
+          <div className="space-y-10 animate-fade-in">
+            <div className="space-y-6">
+              <Badge className="bg-primary/10 text-primary border-primary/20 hover:bg-primary/20 text-base py-2 px-5">
+                <Leaf className="w-5 h-5 mr-2" />
                 {t("hero.badge")}
               </Badge>
               
-              <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight">
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight">
                 <span className="bg-gradient-primary bg-clip-text text-transparent">
                   {t("hero.title1")}
                 </span>
@@ -98,44 +117,44 @@ const HeroSection = () => {
                 <span className="text-foreground">{t("hero.title2")}</span>
               </h1>
               
-              <p className="text-xl text-muted-foreground leading-relaxed">
+              <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed">
                 {t("hero.description")}
               </p>
             </div>
 
-            <div className="flex flex-wrap gap-3 sm:gap-4">
+            <div className="flex flex-wrap gap-4 sm:gap-6">
               <Button
                 variant="hero"
                 size="lg"
-                className="group"
+                className="group text-lg py-6 px-8"
                 onClick={() => {
                   setBatchId("");
                   setQrOpen(true);
                 }}
               >
-                <QrCode className="w-5 h-5 mr-2 group-hover:animate-float" />
+                <QrCode className="w-6 h-6 mr-3 group-hover:animate-float" />
                 {t("hero.scanButton")}
               </Button>
               <a href="/how-it-works">
-                <Button variant="outline" size="lg">
-                  <Shield className="w-5 h-5 mr-2" />
+                <Button variant="outline" size="lg" className="text-lg py-6 px-8">
+                  <Shield className="w-6 h-6 mr-3" />
                   {t("hero.learnMore")}
                 </Button>
               </a>
             </div>
 
             {/* Trust Indicators */}
-            <div className="flex flex-wrap gap-6 pt-6">
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <div className="w-2 h-2 bg-success rounded-full" />
+            <div className="flex flex-wrap gap-8 pt-8">
+              <div className="flex items-center gap-3 text-base text-muted-foreground font-medium">
+                <div className="w-3 h-3 bg-success rounded-full" />
                 {t("hero.trust1")}
               </div>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <div className="w-2 h-2 bg-success rounded-full" />
+              <div className="flex items-center gap-3 text-base text-muted-foreground font-medium">
+                <div className="w-3 h-3 bg-success rounded-full" />
                 {t("hero.trust2")}
               </div>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <div className="w-2 h-2 bg-success rounded-full" />
+              <div className="flex items-center gap-3 text-base text-muted-foreground font-medium">
+                <div className="w-3 h-3 bg-success rounded-full" />
                 {t("hero.trust3")}
               </div>
             </div>
