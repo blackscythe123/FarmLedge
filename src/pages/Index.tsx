@@ -10,16 +10,16 @@ import { ChevronRight, Search, Package, ArrowRight, Leaf, ShieldCheck, Clock, Qr
 import { Skeleton } from "@/components/ui/skeleton";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import hero1 from "@/assets/hero1.jpg";
-import hero2 from "@/assets/hero2.jpg";
-import hero3 from "@/assets/hero3.jpg";
-import hero4 from "@/assets/hero4.jpg";
+import heroClimate from "@/assets/hero-climate.png";
+import heroOdisha from "@/assets/hero-odisha.png";
+import heroGrowth from "@/assets/hero-growth.png";
+import heroSupply from "@/assets/hero-supply.jpg";
 import { QRCodeCanvas } from "qrcode.react";
 import { useToast } from "@/components/ui/use-toast";
 import { Label } from "@/components/ui/label";
 import { useRef } from "react";
 
-const HERO_IMAGES = [hero1, hero2, hero3, hero4];
+const HERO_IMAGES = [heroClimate, heroOdisha, heroGrowth, heroSupply];
 
 const CROP_IMAGES: Record<string, string> = {
   "banana": "https://images.unsplash.com/photo-1528825871115-3581a5387919?q=80&w=2070&auto=format&fit=crop",
@@ -128,10 +128,10 @@ const Index = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prev) => (prev + 1) % HERO_IMAGES.length);
-    }, 5000);
+    }, 2000); // Switch every 2 seconds for dynamic feel
     return () => clearInterval(interval);
   }, []);
-  
+
   type Batch = {
     id: number | string;
     cropType?: string;
@@ -225,20 +225,26 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-green-50 font-sans text-slate-600">
       <Navigation />
-      
+
       <main>
-        {/* Hero Section - Professional Government Style */}
-        <section className="relative pt-24 pb-16 bg-gradient-to-br from-emerald-900 via-green-800 to-teal-900 overflow-hidden">
-          {/* Elegant Background Pattern */}
-          <div className="absolute inset-0">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,255,255,0.1)_0%,transparent_50%)]" />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(255,255,255,0.08)_0%,transparent_50%)]" />
-            <div 
-              className="absolute inset-0 opacity-5"
-              style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='1' fill-rule='evenodd'/%3E%3C/svg%3E")`,
-              }}
-            />
+        {/* Hero Section - Professional Government Style with Rotating Backgrounds */}
+        <section className="relative pt-24 pb-16 overflow-hidden">
+          {/* Rotating Background Images */}
+          <div className="absolute inset-0 z-0">
+            {HERO_IMAGES.map((img, index) => (
+              <img
+                key={img}
+                src={img}
+                alt="Agricultural innovation"
+                className={`absolute inset-0 w-full h-full object-cover transition-all duration-[1500ms] ease-in-out ${index === currentImageIndex ? "opacity-100 scale-100" : "opacity-0 scale-105"
+                  }`}
+              />
+            ))}
+            {/* Lighter translucent overlay - reduced opacity for better image visibility */}
+            <div className="absolute inset-0 bg-gradient-to-br from-emerald-900/50 via-green-800/40 to-teal-900/50" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/40" />
+            {/* Subtle animated gradient for premium feel */}
+            <div className="absolute inset-0 bg-gradient-to-r from-emerald-600/5 via-transparent to-blue-600/5 animate-pulse" style={{ animationDuration: '4s' }} />
           </div>
 
           <div className="container mx-auto px-4 relative z-10">
@@ -247,9 +253,9 @@ const Index = () => {
               <div className="flex items-start gap-8 mb-10">
                 <div className="relative">
                   <div className="w-40 h-40 rounded-full shadow-2xl ring-4 ring-white/20 overflow-hidden">
-                    <img 
-                      src="/src/assets/odisha-logo.jpg" 
-                      alt="Odisha Government Emblem" 
+                    <img
+                      src="/src/assets/odisha-logo.jpg"
+                      alt="Odisha Government Emblem"
                       className="w-full h-full object-cover"
                     />
                   </div>
@@ -263,7 +269,7 @@ const Index = () => {
                     <span className="text-white font-medium text-sm tracking-wide">{t('hero.badge')}</span>
                   </div>
                   <h1 className="text-3xl md:text-5xl font-black text-white mb-4 leading-none tracking-tight">
-                    Department of Agriculture 
+                    Department of Agriculture
                   </h1>
                   <div className="flex items-center gap-3 text-emerald-100">
                     <div className="h-px w-12 bg-emerald-300" />
@@ -299,41 +305,41 @@ const Index = () => {
                     {t('hero.description')}
                   </p>
 
-                {/* Search Box */}
-                <div className="bg-white rounded-xl p-2 flex flex-col md:flex-row gap-3 shadow-2xl max-w-2xl">
-                  <div className="flex-1 flex items-center gap-3 px-4">
-                    <Search className="w-5 h-5 text-gray-400" />
-                    <Input
-                      type="text"
-                      placeholder={t('index.searchPlaceholder')}
-                      value={search}
-                      onChange={(e) => setSearch(e.target.value)}
-                      onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-                      className="border-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-lg"
-                    />
+                  {/* Search Box */}
+                  <div className="bg-white rounded-xl p-2 flex flex-col md:flex-row gap-3 shadow-2xl max-w-2xl">
+                    <div className="flex-1 flex items-center gap-3 px-4">
+                      <Search className="w-5 h-5 text-gray-400" />
+                      <Input
+                        type="text"
+                        placeholder={t('index.searchPlaceholder')}
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+                        className="border-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-lg"
+                      />
+                    </div>
+                    <div className="flex gap-2">
+                      <Button
+                        variant="outline"
+                        onClick={() => {
+                          setBatchId(search);
+                          setQrOpen(true);
+                        }}
+                        className="bg-gray-100 hover:bg-gray-200 border-gray-200 text-gray-700"
+                      >
+                        <QrCode className="w-5 h-5 mr-2" />
+                        {t('index.searchPlaceholder').includes('QR') ? 'Generate QR' : 'Generate QR'}
+                      </Button>
+                      <Button
+                        onClick={handleSearch}
+                        className="bg-green-600 hover:bg-green-700 text-white px-8"
+                        size="lg"
+                      >
+                        {t('index.trackButton')}
+                        <ArrowRight className="w-5 h-5 ml-2" />
+                      </Button>
+                    </div>
                   </div>
-                  <div className="flex gap-2">
-                    <Button
-                      variant="outline"
-                      onClick={() => {
-                        setBatchId(search);
-                        setQrOpen(true);
-                      }}
-                      className="bg-gray-100 hover:bg-gray-200 border-gray-200 text-gray-700"
-                    >
-                      <QrCode className="w-5 h-5 mr-2" />
-                      {t('index.searchPlaceholder').includes('QR') ? 'Generate QR' : 'Generate QR'}
-                    </Button>
-                    <Button 
-                      onClick={handleSearch}
-                      className="bg-green-600 hover:bg-green-700 text-white px-8"
-                      size="lg"
-                    >
-                      {t('index.trackButton')}
-                      <ArrowRight className="w-5 h-5 ml-2" />
-                    </Button>
-                  </div>
-                </div>
                 </div>
               </div>
 
@@ -469,8 +475,8 @@ const Index = () => {
               <Card className="border-emerald-200 shadow-xl bg-white/80 backdrop-blur-sm">
                 <CardContent className="p-6 sm:p-8">
                   <Link to="/price-prediction" className="block">
-                    <Button 
-                      size="lg" 
+                    <Button
+                      size="lg"
                       className="w-full bg-emerald-600 hover:bg-emerald-700 text-white text-lg py-6 rounded-lg shadow-lg hover:shadow-xl transition-all"
                     >
                       <Target className="w-5 h-5 mr-2" />
@@ -478,7 +484,7 @@ const Index = () => {
                       <ChevronRight className="w-5 h-5 ml-2" />
                     </Button>
                   </Link>
-                  
+
                   <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
                     <div className="p-4 bg-emerald-50 rounded-lg">
                       <div className="text-2xl font-bold text-emerald-700">30+</div>
@@ -525,20 +531,20 @@ const Index = () => {
             ) : (
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {recentBatches.map((b) => (
-                  <Card 
-                    key={String(b.id)} 
+                  <Card
+                    key={String(b.id)}
                     className="group relative bg-white border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden rounded-xl"
                     onClick={() => openDetails(b)}
                   >
                     {/* Image Header */}
                     <div className="relative h-56 overflow-hidden">
-                      <img 
-                        src={getCropImage(b.cropType)} 
+                      <img
+                        src={getCropImage(b.cropType)}
                         alt={b.cropType}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60"></div>
-                      
+
                       {/* Badges */}
                       <div className="absolute bottom-3 left-3">
                         <Badge className="bg-black/50 backdrop-blur-md text-white border-none font-mono">
@@ -580,7 +586,7 @@ const Index = () => {
                           <span>CONSUMER</span>
                         </div>
                         <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
-                          <div 
+                          <div
                             className="h-full bg-emerald-500 rounded-full transition-all duration-1000 ease-out"
                             style={{ width: `${getProgress(b)}%` }}
                           ></div>
@@ -595,39 +601,39 @@ const Index = () => {
             {/* Pagination */}
             {!loading && totalBatches > 6 && (
               <div className="flex justify-center items-center gap-2 mt-12">
-                <Button 
-                  variant="outline" 
+                <Button
+                  variant="outline"
                   onClick={() => setPage(p => Math.max(1, p - 1))}
                   disabled={page === 1}
                   className="border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-emerald-700"
                 >
                   {t('index.prev')}
                 </Button>
-                
+
                 {Array.from({ length: Math.ceil(totalBatches / 6) }).map((_, i) => {
-                   const p = i + 1;
-                   const totalPages = Math.ceil(totalBatches / 6);
-                   // Show first, last, and current +/- 1
-                   if (p === 1 || p === totalPages || (p >= page - 1 && p <= page + 1)) {
-                     return (
-                        <Button
-                            key={p}
-                            variant={page === p ? "default" : "outline"}
-                            className={page === p ? "bg-emerald-600 hover:bg-emerald-700 text-white" : "border-slate-200 text-slate-600 hover:bg-slate-50"}
-                            onClick={() => setPage(p)}
-                        >
-                            {p}
-                        </Button>
-                     );
-                   }
-                   if (p === page - 2 || p === page + 2) {
-                       return <span key={p} className="text-slate-400">...</span>
-                   }
-                   return null;
+                  const p = i + 1;
+                  const totalPages = Math.ceil(totalBatches / 6);
+                  // Show first, last, and current +/- 1
+                  if (p === 1 || p === totalPages || (p >= page - 1 && p <= page + 1)) {
+                    return (
+                      <Button
+                        key={p}
+                        variant={page === p ? "default" : "outline"}
+                        className={page === p ? "bg-emerald-600 hover:bg-emerald-700 text-white" : "border-slate-200 text-slate-600 hover:bg-slate-50"}
+                        onClick={() => setPage(p)}
+                      >
+                        {p}
+                      </Button>
+                    );
+                  }
+                  if (p === page - 2 || p === page + 2) {
+                    return <span key={p} className="text-slate-400">...</span>
+                  }
+                  return null;
                 })}
 
-                <Button 
-                  variant="outline" 
+                <Button
+                  variant="outline"
                   onClick={() => setPage(p => p + 1)}
                   disabled={page * 6 >= totalBatches}
                   className="border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-emerald-700"
@@ -952,7 +958,7 @@ const Index = () => {
                 </div>
               </div>
             </div>
-            
+
             <div className="space-y-2">
               <h4 className="font-medium text-slate-900 border-b pb-2">{t('index.priceHistory')}</h4>
               <div className="flex justify-between text-sm py-1">
