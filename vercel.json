@@ -1,7 +1,8 @@
 {
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "https://farmledge-expire-alert.onrender.com/api/$1" },
-    { "source": "/create-checkout-session", "destination": "https://farmledge-expire-alert.onrender.com/create-checkout-session" },
+    { "source": "/api/(.*)", "destination": "https://farmledge-crop-prediction.onrender.com/api/$1" },
+    { "source": "/predict", "destination": "https://farmledge-crop-prediction-python.onrender.com/predict" },
+    { "source": "/create-checkout-session", "destination": "https://farmledge-crop-prediction.onrender.com/create-checkout-session" },
     { "source": "/((?!api|create-checkout-session|.*\\..*).*)", "destination": "/" }
   ]
 }

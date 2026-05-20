@@ -58,6 +58,14 @@ Supported languages:
 - Prefer reusing existing `common` keys for buttons and basic labels.
 - Avoid embedding variables in sentences where possible; if needed, use interpolation via `t('key', { value })`.
 
+### guides (Farmer Guides)
+- `zeroLossPlaybook`, `title`, `subtitle`, `signedInAs`
+- `findCrop`, `chooseCrop`, `searchPlaceholder`, `loading`, `failed`, `noMatches`
+- `selectCrop`, `detailsSubtitle`, `pickCrop`
+- `shelfLife`, `ambient`, `cold`
+- `primaryHandling`, `secondarySteps`, `processingOptions`, `alternateMarkets`, `recommendations`
+- `mnregaPotential`, `eligible`, `yes`, `no`, `dailyWage`, `wasteConversion`
+
 ## Quality checklist
 - [ ] All new pages have added keys in all locales.
 - [ ] No duplicate keys within a locale JSON.

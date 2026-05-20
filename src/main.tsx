@@ -4,6 +4,7 @@ import './index.css'
 import { WagmiProvider } from 'wagmi'
 import { wagmiConfig } from './lib/wagmi'
 import { resetLocalData } from './lib/resetData'
+import './i18n'
 
 import { FontSizeProvider } from './context/FontSizeContext';
 

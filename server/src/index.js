@@ -2,6 +2,7 @@ import dotenv from 'dotenv'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import express from 'express'
+import axios from 'axios'
 import cors from "cors";
 import Stripe from 'stripe'
 import bodyParser from 'body-parser'
@@ -16,6 +17,7 @@ import { fetchWeatherAndAlerts, getAlertHistory } from './services/weatherServic
 import { listSchemes, upsertSubscription, getSubscriptions, getSubscriptionByFarmer, triggerSchemeTest } from './services/schemesService.js'
 import { listCropGuides, getCropGuideByName } from './services/cropGuidesService.js'
 import { listResources } from './services/awarenessService.js'
+import { createAlert, getAlerts } from './iotAlerts.js';
 
 // Default EOAs for testing when inputs are missing
 const DEFAULT_ADDRESSES = {
@@ -74,6 +76,40 @@ app.get("/", (req, res) => {
 
 // Add JSON parsing middleware for API routes
 app.use('/api', express.json());
+
+// Distributor IoT alerts (simulate + fetch)
+app.post('/api/distributor/iot/simulate', async (req, res) => {
+  try {
+    const { batchId, cropName, storageId, distributorContact } = req.body || {};
+
+    if (!batchId || !cropName || !storageId) {
+      return res.status(400).json({ error: 'batchId, cropName, and storageId are required' });
+    }
+
+    const alert = await createAlert({
+      batchId,
+      cropName,
+      storageId,
+      distributorContact,
+    });
+
+    return res.json({ success: true, alert });
+  } catch (error) {
+    console.error('[IoT] simulate error:', error);
+    return res.status(500).json({ error: 'Failed to simulate IoT reading' });
+  }
+});
+
+app.get('/api/distributor/iot/alerts', (req, res) => {
+  try {
+    const { batchId } = req.query;
+    const alerts = getAlerts(batchId);
+    return res.json({ alerts });
+  } catch (error) {
+    console.error('[IoT] get alerts error:', error);
+    return res.status(500).json({ error: 'Failed to fetch IoT alerts' });
+  }
+});
 
 // OpenRouteService proxy endpoint (for distributor map routing)
 app.post("/api/get-route", async (req, res) => {
@@ -541,10 +577,19 @@ app.get('/api/weather/current', async (req, res) => {
   try {
     const { lat, lon, lang, farmerId, batchId } = req.query
     const result = await fetchWeatherAndAlerts({ lat, lon, lang, farmerId, batchId })
+    console.log('[weather] API response structure:', {
+      hasWeather: !!result.weather,
+      hasCurrent: !!result.weather?.current,
+      currentKeys: result.weather?.current ? Object.keys(result.weather.current) : [],
+      mainData: result.weather?.current?.main,
+      windData: result.weather?.current?.wind,
+      alertsCount: result.alerts?.length || 0
+    })
     res.json({ ok: true, weather: result.weather, alerts: result.alerts })
   } catch (e) {
     const msg = e?.message || 'weather_error'
     let status = 400
+    console.error('[weather] Error:', msg, e)
     if (msg === 'OPENWEATHER_API_KEY missing') status = 500
     else if (msg === 'openweather_unauthorized') status = 401
     else if (msg === 'openweather_rate_limited') status = 429
@@ -588,7 +633,8 @@ app.post('/api/schemes/notify-test', async (req, res) => {
 // Zero-loss crop guides: list and lookup by name
 app.get('/api/crop-guides', async (req, res) => {
   try {
-    const guides = await listCropGuides()
+    const lang = req.query.lang || 'en'
+    const guides = await listCropGuides(lang)
     res.json({ ok: true, guides })
   } catch (e) {
     res.status(500).json({ ok: false, error: e?.message || 'crop_guides_error' })
@@ -597,7 +643,8 @@ app.get('/api/crop-guides', async (req, res) => {
 
 app.get('/api/crop-guides/:name', async (req, res) => {
   try {
-    const guide = await getCropGuideByName(req.params.name)
+    const lang = req.query.lang || 'en'
+    const guide = await getCropGuideByName(req.params.name, lang)
     if (!guide) return res.status(404).json({ ok: false, error: 'guide_not_found' })
     res.json({ ok: true, guide })
   } catch (e) {
@@ -1279,6 +1326,97 @@ app.get('/api/chain-info', async (req, res) => {
     res.status(500).json({ error: 'diagnostic_failed', message: e?.message || String(e) })
   }
 })
+
+app.post('/api/weather-alert', async (req, res) => {
+  try {
+    const { message, recipients } = req.body
+    const webhookUrl = process.env.N8N_WEBHOOK_SECRET || process.env.WHATSAPP_WEBHOOK_URL
+
+    if (!webhookUrl) {
+      console.error('Webhook URL not configured')
+      return res.status(500).json({ error: 'Webhook not configured' })
+    }
+
+    await axios.post(webhookUrl, {
+      type: 'weather_alert',
+      message,
+      recipients,
+      timestamp: new Date().toISOString()
+    })
+
+    res.json({ success: true })
+  } catch (error) {
+    console.error('Weather alert failed', error)
+    res.status(500).json({ error: 'Failed to send alert' })
+  }
+})
+
+app.get("/api/user/role/:address", async (req, res) => {
+  try {
+    const { address } = req.params;
+    
+    if (!isValidAddress(address)) {
+      return res.status(400).json({ error: "invalid_address" });
+    }
+
+    if (!(await hasContractCode())) {
+      return res.status(400).json({ error: "not_a_contract", address: CONTRACT_ADDRESS });
+    }
+
+    // Check each role
+    const [farmer, verifier, distributor, retailer] = await Promise.all([
+      client.readContract({ address: CONTRACT_ADDRESS, abi: AGRI_TRUTH_CHAIN_ABI, functionName: 'farmerProfiles', args: [address] }),
+      client.readContract({ address: CONTRACT_ADDRESS, abi: AGRI_TRUTH_CHAIN_ABI, functionName: 'verifierProfiles', args: [address] }),
+      client.readContract({ address: CONTRACT_ADDRESS, abi: AGRI_TRUTH_CHAIN_ABI, functionName: 'distributorProfiles', args: [address] }),
+      client.readContract({ address: CONTRACT_ADDRESS, abi: AGRI_TRUTH_CHAIN_ABI, functionName: 'retailerProfiles', args: [address] })
+    ]);
+
+    let role = "unknown";
+    if (farmer?.isRegistered) role = "farmer";
+    else if (verifier?.isRegistered) role = "verifier";
+    else if (distributor?.isRegistered) role = "distributor";
+    else if (retailer?.isRegistered) role = "retailer";
+
+    res.json({ role, address });
+  } catch (err) {
+    console.error("Role check error:", err);
+    res.status(500).json({ error: "Failed to check role" });
+  }
+});
+
+app.get("/api/user/role/:address", async (req, res) => {
+  try {
+    const { address } = req.params;
+    
+    if (!isValidAddress(address)) {
+      return res.status(400).json({ error: "invalid_address" });
+    }
+
+    if (!(await hasContractCode())) {
+      return res.status(400).json({ error: "not_a_contract", address: CONTRACT_ADDRESS });
+    }
+
+    // Check each role
+    const [farmer, verifier, distributor, retailer] = await Promise.all([
+      client.readContract({ address: CONTRACT_ADDRESS, abi: AGRI_TRUTH_CHAIN_ABI, functionName: 'farmerProfiles', args: [address] }),
+      client.readContract({ address: CONTRACT_ADDRESS, abi: AGRI_TRUTH_CHAIN_ABI, functionName: 'verifierProfiles', args: [address] }),
+      client.readContract({ address: CONTRACT_ADDRESS, abi: AGRI_TRUTH_CHAIN_ABI, functionName: 'distributorProfiles', args: [address] }),
+      client.readContract({ address: CONTRACT_ADDRESS, abi: AGRI_TRUTH_CHAIN_ABI, functionName: 'retailerProfiles', args: [address] })
+    ]);
+
+    let role = "unknown";
+    if (farmer?.isRegistered) role = "farmer";
+    else if (verifier?.isRegistered) role = "verifier";
+    else if (distributor?.isRegistered) role = "distributor";
+    else if (retailer?.isRegistered) role = "retailer";
+
+    res.json({ role, address });
+  } catch (err) {
+    console.error("Role check error:", err);
+    res.status(500).json({ error: "Failed to check role" });
+  }
+});
+
 const PORT = process.env.PORT || 3001;
 const server = app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server listening on port ${PORT}`);
@@ -1446,7 +1584,6 @@ const checkExpiryHandler = async (req, res) => {
 
     const now = Math.floor(Date.now() / 1000)
     const ONE_DAY = 24 * 60 * 60
-    const WINDOWS = [30, 14, 7, 1]
     const alertsSent = []
     const recommendedSchemes = listSchemes().slice(0, 3)
 
@@ -1461,15 +1598,20 @@ const checkExpiryHandler = async (req, res) => {
         const timeLeft = expiryDate - now
         if (timeLeft <= 0) continue
 
-        const windowDays = WINDOWS.find((days) => timeLeft <= days * ONE_DAY && timeLeft > (days - 1) * ONE_DAY)
-        if (!windowDays) continue
-        if (!isSameAddress(currentOwner, farmer)) continue
+        // Check if expiring in next 2 days
+        if (timeLeft > 2 * ONE_DAY) continue
+        
+        const windowDays = Math.ceil(timeLeft / ONE_DAY)
 
-        const sub = await getSubscriptionByFarmer(farmer)
-        if (!sub?.phone) continue
+        if (!isSameAddress(currentOwner, farmer)) {
+          console.log(`[cron] Batch ${id} skipped: owner ${currentOwner} != farmer ${farmer}`)
+          continue
+        }
+
+        const sub = await getSubscriptionByFarmer(farmer) || {}
 
         await sendWhatsAppMessage({
-          phone: sub.phone,
+          phone: sub.phone || null,
           farmerAddress: farmer,
           language: sub.language || 'en',
           batchId: id,
@@ -1478,7 +1620,7 @@ const checkExpiryHandler = async (req, res) => {
           schemes: recommendedSchemes,
           schemeIds: sub.schemeIds || recommendedSchemes.map((s) => s.id)
         })
-        alertsSent.push({ batchId: id.toString(), farmer, expiryDate, windowDays, phone: sub.phone })
+        alertsSent.push({ batchId: id.toString(), farmer, expiryDate, windowDays, phone: sub.phone || 'n8n-lookup' })
       } catch (e) {
         console.warn(`[cron] Failed to check batch ${id}`, e)
       }
@@ -1511,7 +1653,7 @@ async function sendWhatsAppMessage({ phone, farmerAddress, language = 'en', batc
     window: s.window,
   }))
 
-  console.log(`[WHATSAPP] Sending webhook request for Batch #${batchId} to phone=${phone}`)
+  console.log(`[WHATSAPP] Sending webhook request for Batch #${batchId} (Farmer: ${farmerAddress})`)
     
   try {
     const response = await fetch(webhookUrl, {
@@ -1529,7 +1671,7 @@ async function sendWhatsAppMessage({ phone, farmerAddress, language = 'en', batc
         windowDays,
         schemeIds,
         schemes: schemePayload,
-        message: `Batch #${batchId} expires on ${dateStr}. Apply/renew key schemes (PMFBY, KCC, PM-KISAN) to reduce losses. Window: ~${windowDays} days left.`
+        message: `Batch #${batchId} is expiring on ${dateStr}. Apply for schemes to mitigate loss: ${schemePayload.map(s => s.applyUrl).join(', ')}`
       })
     })
         

@@ -43,7 +43,7 @@ interface SoilCharacteristics {
     districts: string[];
 }
 
-const CROPS = ['Rice', 'Moong', 'Brinjal', 'Groundnut', 'Cotton', 'Sugarcane', 'Wheat', 'Maize', 'Onion', 'Tomato'];
+const CROPS = ['Rice', 'Moong', 'Brinjal', 'Groundnut', 'Cotton', 'Sugarcane', 'Wheat', 'Maize', 'Onion', 'Onion-Bhima Super', 'Onion-bhima shweta', 'Tomato'];
 
 // Real crop-soil suitability data based on Odisha agricultural practices
 const CROP_SOIL_SUITABILITY = {
@@ -100,6 +100,18 @@ const CROP_SOIL_SUITABILITY = {
         good: ["Mixed Red and Black", "Laterite"],
         season: "Rabi",
         avgYield: "15-20 tons/hectare"
+    },
+    "Onion-Bhima Super": {
+        best: ["Red", "Black"],
+        good: ["Mixed Red and Black", "Laterite"],
+        season: "Rabi",
+        avgYield: "18-22 tons/hectare"
+    },
+    "Onion-bhima shweta": {
+        best: ["Red", "Black"],
+        good: ["Mixed Red and Black", "Laterite"],
+        season: "Rabi",
+        avgYield: "16-20 tons/hectare"
     },
     "Tomato": {
         best: ["Red", "Laterite"],
@@ -434,7 +446,7 @@ const CropPricePrediction = () => {
         setError(null);
 
         try {
-            const response = await fetch('http://localhost:5001/predict', {
+            const response = await fetch('/predict', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -467,15 +479,15 @@ const CropPricePrediction = () => {
             <div className="text-center space-y-2">
                 <h2 className="text-3xl font-serif font-bold text-emerald-900 flex items-center justify-center gap-2">
                     <Sprout className="w-8 h-8 text-emerald-600" />
-                    Smart Crop Price Prediction
+                    {t('cropPrediction.title')}
                 </h2>
-                <p className="text-slate-600">Real-time predictions based on government soil data and market prices</p>
+                <p className="text-slate-600">{t('cropPrediction.subtitle')}</p>
             </div>
 
             <Card className="border-emerald-100 shadow-lg bg-white/50 backdrop-blur-sm">
                 <CardHeader>
-                    <CardTitle>Select Parameters</CardTitle>
-                    <CardDescription>Choose your crop, district, and soil type for accurate predictions</CardDescription>
+                    <CardTitle>{t('cropPrediction.selectParameters')}</CardTitle>
+                    <CardDescription>{t('cropPrediction.selectDesc')}</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -483,11 +495,11 @@ const CropPricePrediction = () => {
                         <div className="space-y-2">
                             <label className="text-sm font-medium text-slate-700 flex items-center gap-2">
                                 <Sprout className="w-4 h-4" />
-                                Crop
+                                {t('cropPrediction.crop')}
                             </label>
                             <Select value={selectedCrop} onValueChange={setSelectedCrop} disabled={loading}>
                                 <SelectTrigger>
-                                    <SelectValue placeholder="Select Crop" />
+                                    <SelectValue placeholder={t('cropPrediction.selectCrop')} />
                                 </SelectTrigger>
                                 <SelectContent>
                                     {CROPS.map(crop => (
@@ -501,11 +513,11 @@ const CropPricePrediction = () => {
                         <div className="space-y-2">
                             <label className="text-sm font-medium text-slate-700 flex items-center gap-2">
                                 <MapPin className="w-4 h-4" />
-                                District
+                                {t('cropPrediction.district')}
                             </label>
                             <Select value={selectedDistrict} onValueChange={setSelectedDistrict} disabled={loading}>
                                 <SelectTrigger>
-                                    <SelectValue placeholder="Select District" />
+                                    <SelectValue placeholder={t('cropPrediction.selectDistrict')} />
                                 </SelectTrigger>
                                 <SelectContent>
                                     {districts.map(district => (
@@ -519,11 +531,11 @@ const CropPricePrediction = () => {
                         <div className="space-y-2">
                             <label className="text-sm font-medium text-slate-700 flex items-center gap-2">
                                 <Layers className="w-4 h-4" />
-                                Soil Type
+                                {t('cropPrediction.soilType')}
                             </label>
                             <Select value={selectedSoil} onValueChange={setSelectedSoil} disabled={loading || !selectedDistrict}>
                                 <SelectTrigger>
-                                    <SelectValue placeholder="Select Soil" />
+                                    <SelectValue placeholder={t('cropPrediction.selectSoil')} />
                                 </SelectTrigger>
                                 <SelectContent>
                                     {soils.map(soil => (
@@ -540,7 +552,7 @@ const CropPricePrediction = () => {
                         disabled={loading || !selectedCrop || !selectedDistrict || !selectedSoil}
                     >
                         <Target className="w-4 h-4 mr-2" />
-                        {loading ? 'Calculating...' : 'Get Prediction'}
+                        {loading ? t('cropPrediction.calculating') : t('cropPrediction.getPrediction')}
                     </Button>
                 </CardContent>
             </Card>
@@ -554,7 +566,7 @@ const CropPricePrediction = () => {
             {error && (
                 <Alert variant="destructive">
                     <AlertCircle className="h-4 w-4" />
-                    <AlertTitle>Error</AlertTitle>
+                    <AlertTitle>{t('cropPrediction.error')}</AlertTitle>
                     <AlertDescription>{error}</AlertDescription>
                 </Alert>
             )}
@@ -563,9 +575,9 @@ const CropPricePrediction = () => {
                 <Card className="bg-gradient-to-br from-emerald-50 to-white border-emerald-200 shadow-md">
                     <CardHeader>
                         <CardTitle className="flex justify-between items-center">
-                            <span>{prediction.crop} Price Prediction</span>
+                            <span>{t('cropPrediction.predictionResult', { crop: prediction.crop })}</span>
                             <Badge variant="outline" className="bg-white text-emerald-700 border-emerald-200">
-                                {prediction.confidence}% Confidence
+                                {t('cropPrediction.confidence', { percent: prediction.confidence })}
                             </Badge>
                         </CardTitle>
                         <CardDescription>
@@ -575,21 +587,21 @@ const CropPricePrediction = () => {
                     <CardContent className="space-y-6">
                         <div className="flex justify-between items-end">
                             <div>
-                                <p className="text-sm text-slate-500 font-medium uppercase tracking-wider">Predicted Price</p>
+                                <p className="text-sm text-slate-500 font-medium uppercase tracking-wider">{t('cropPrediction.predictedPrice')}</p>
                                 <div className="flex items-baseline gap-1">
                                     <p className="text-4xl font-bold text-emerald-900">₹{prediction.predicted_price.toFixed(2)}</p>
-                                    <span className="text-slate-500 font-medium">/ Quintal</span>
+                                    <span className="text-slate-500 font-medium">{t('cropPrediction.perQuintal')}</span>
                                 </div>
                             </div>
                             <div className="flex items-center gap-1 px-3 py-1 rounded-full text-sm font-bold bg-green-100 text-green-700">
                                 <TrendingUp className="w-4 h-4" />
-                                High Accuracy
+                                {t('cropPrediction.highAccuracy')}
                             </div>
                         </div>
 
                         <div className="flex items-start gap-2 text-xs text-slate-500 pt-2 border-t border-emerald-100">
                             <Info className="w-4 h-4 mt-0.5 flex-shrink-0" />
-                            <p>Prediction based on real Odisha government soil data and historical crop prices</p>
+                            <p>{t('cropPrediction.predictionBased')}</p>
                         </div>
                     </CardContent>
                 </Card>
@@ -601,7 +613,7 @@ const CropPricePrediction = () => {
                     <CardHeader>
                         <CardTitle className="flex items-center gap-2 text-amber-900">
                             <Beaker className="w-6 h-6 text-amber-600" />
-                            {soilData.name} - Detailed Analysis
+                            {soilData.name} - {t('cropPrediction.detailedAnalysis')}
                         </CardTitle>
                         <CardDescription className="text-slate-700">{soilData.description}</CardDescription>
                     </CardHeader>
@@ -611,23 +623,23 @@ const CropPricePrediction = () => {
                             <div className="p-4 bg-white rounded-lg border border-amber-100">
                                 <h4 className="font-semibold text-sm text-amber-900 mb-3 flex items-center gap-2">
                                     <Layers className="w-4 h-4" />
-                                    Physical Properties
+                                    {t('cropPrediction.physicalProperties')}
                                 </h4>
                                 <div className="space-y-2 text-sm">
                                     <div className="flex justify-between">
-                                        <span className="text-slate-600">Texture:</span>
+                                        <span className="text-slate-600">{t('cropPrediction.texture')}:</span>
                                         <span className="font-medium text-slate-800">{soilData.texture}</span>
                                     </div>
                                     <div className="flex justify-between">
-                                        <span className="text-slate-600">Color:</span>
+                                        <span className="text-slate-600">{t('cropPrediction.color')}:</span>
                                         <span className="font-medium text-slate-800">{soilData.color}</span>
                                     </div>
                                     <div className="flex justify-between">
-                                        <span className="text-slate-600">Drainage:</span>
+                                        <span className="text-slate-600">{t('cropPrediction.drainage')}:</span>
                                         <span className="font-medium text-slate-800">{soilData.drainage}</span>
                                     </div>
                                     <div className="flex justify-between">
-                                        <span className="text-slate-600">Water Retention:</span>
+                                        <span className="text-slate-600">{t('cropPrediction.waterRetention')}:</span>
                                         <span className="font-medium text-slate-800">{soilData.water_retention}</span>
                                     </div>
                                 </div>
@@ -636,23 +648,23 @@ const CropPricePrediction = () => {
                             <div className="p-4 bg-white rounded-lg border border-emerald-100">
                                 <h4 className="font-semibold text-sm text-emerald-900 mb-3 flex items-center gap-2">
                                     <Beaker className="w-4 h-4" />
-                                    Chemical Properties
+                                    {t('cropPrediction.chemicalProperties')}
                                 </h4>
                                 <div className="space-y-2 text-sm">
                                     <div className="flex justify-between">
-                                        <span className="text-slate-600">pH Range:</span>
+                                        <span className="text-slate-600">{t('cropPrediction.phRange')}:</span>
                                         <span className="font-medium text-slate-800">{soilData.ph_range}</span>
                                     </div>
                                     <div className="flex justify-between">
-                                        <span className="text-slate-600">pH Category:</span>
+                                        <span className="text-slate-600">{t('cropPrediction.phCategory')}:</span>
                                         <Badge variant="outline" className="text-xs">{soilData.ph_category}</Badge>
                                     </div>
                                     <div className="flex justify-between">
-                                        <span className="text-slate-600">Organic Carbon:</span>
+                                        <span className="text-slate-600">{t('cropPrediction.organicCarbon')}:</span>
                                         <span className="font-medium text-slate-800">{soilData.organic_carbon}</span>
                                     </div>
                                     <div className="flex justify-between">
-                                        <span className="text-slate-600">Fertility:</span>
+                                        <span className="text-slate-600">{t('cropPrediction.fertility')}:</span>
                                         <Badge className={
                                             soilData.fertility.includes('High') ? 'bg-green-600' :
                                             soilData.fertility.includes('Medium') ? 'bg-yellow-600' :
@@ -667,19 +679,19 @@ const CropPricePrediction = () => {
                         <div className="p-4 bg-gradient-to-r from-blue-50 to-green-50 rounded-lg border border-blue-200">
                             <h4 className="font-semibold text-sm text-blue-900 mb-3 flex items-center gap-2">
                                 <Activity className="w-4 h-4" />
-                                NPK Nutrient Profile
+                                {t('cropPrediction.npkProfile')}
                             </h4>
                             <div className="grid grid-cols-3 gap-4">
                                 <div className="text-center">
-                                    <div className="text-xs text-slate-600 mb-1">Nitrogen (N)</div>
+                                    <div className="text-xs text-slate-600 mb-1">{t('cropPrediction.nitrogen')}</div>
                                     <div className="text-lg font-bold text-blue-700">{soilData.nitrogen}</div>
                                 </div>
                                 <div className="text-center">
-                                    <div className="text-xs text-slate-600 mb-1">Phosphorus (P)</div>
+                                    <div className="text-xs text-slate-600 mb-1">{t('cropPrediction.phosphorus')}</div>
                                     <div className="text-lg font-bold text-purple-700">{soilData.phosphorus}</div>
                                 </div>
                                 <div className="text-center">
-                                    <div className="text-xs text-slate-600 mb-1">Potassium (K)</div>
+                                    <div className="text-xs text-slate-600 mb-1">{t('cropPrediction.potassium')}</div>
                                     <div className="text-lg font-bold text-green-700">{soilData.potassium}</div>
                                 </div>
                             </div>
@@ -695,11 +707,11 @@ const CropPricePrediction = () => {
                         }`}>
                             <h4 className="font-semibold text-sm mb-2 flex items-center gap-2">
                                 {soilData.price_influence.factor === 'Positive' ? (
-                                    <><TrendingUp className="w-4 h-4 text-green-600" /> <span className="text-green-900">Positive Price Impact</span></>
+                                    <><TrendingUp className="w-4 h-4 text-green-600" /> <span className="text-green-900">{t('cropPrediction.positivePriceImpact')}</span></>
                                 ) : soilData.price_influence.factor === 'Negative' ? (
-                                    <><TrendDown className="w-4 h-4 text-red-600" /> <span className="text-red-900">Negative Price Impact</span></>
+                                    <><TrendDown className="w-4 h-4 text-red-600" /> <span className="text-red-900">{t('cropPrediction.negativePriceImpact')}</span></>
                                 ) : (
-                                    <><Activity className="w-4 h-4 text-yellow-600" /> <span className="text-yellow-900">Neutral Price Impact</span></>
+                                    <><Activity className="w-4 h-4 text-yellow-600" /> <span className="text-yellow-900">{t('cropPrediction.neutralPriceImpact')}</span></>
                                 )}
                             </h4>
                             <div className="space-y-2">
@@ -719,7 +731,7 @@ const CropPricePrediction = () => {
 
                         {/* Key Characteristics */}
                         <div>
-                            <h4 className="font-semibold text-sm text-slate-900 mb-2">Key Characteristics</h4>
+                            <h4 className="font-semibold text-sm text-slate-900 mb-2">{t('cropPrediction.keyCharacteristics')}</h4>
                             <ul className="space-y-1">
                                 {soilData.characteristics.map((char, idx) => (
                                     <li key={idx} className="text-sm text-slate-700 flex items-start gap-2">
@@ -734,7 +746,7 @@ const CropPricePrediction = () => {
                         <div className="p-3 bg-blue-50 rounded-lg border border-blue-200">
                             <h4 className="font-semibold text-sm text-blue-900 mb-1 flex items-center gap-2">
                                 <Info className="w-4 h-4" />
-                                Management Recommendation
+                                {t('cropPrediction.managementRecommendation')}
                             </h4>
                             <p className="text-sm text-slate-700">{soilData.management}</p>
                         </div>
@@ -748,9 +760,9 @@ const CropPricePrediction = () => {
                     <CardHeader>
                         <CardTitle className="flex items-center gap-2">
                             <Leaf className="w-5 h-5 text-emerald-600" />
-                            Recommended Crops for {selectedSoil}
+                            {t('cropPrediction.recommendedCrops', { soilType: selectedSoil })}
                         </CardTitle>
-                        <CardDescription>Based on real Odisha agricultural data and soil suitability</CardDescription>
+                        <CardDescription>{t('cropPrediction.basedOnReal')}</CardDescription>
                     </CardHeader>
                     <CardContent>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -773,15 +785,15 @@ const CropPricePrediction = () => {
                                             }
                                         >
                                             {suitability === 'best' ? (
-                                                <><CheckCircle2 className="w-3 h-3 mr-1" /> Best Match</>
+                                                <><CheckCircle2 className="w-3 h-3 mr-1" /> {t('cropPrediction.bestMatch')}</>
                                             ) : (
-                                                'Good Match'
+                                                t('cropPrediction.goodMatch')
                                             )}
                                         </Badge>
                                     </div>
                                     <div className="space-y-1 text-sm text-slate-600">
-                                        <p><strong>Season:</strong> {data.season}</p>
-                                        <p><strong>Avg Yield:</strong> {data.avgYield}</p>
+                                        <p><strong>{t('cropPrediction.season')}:</strong> {data.season}</p>
+                                        <p><strong>{t('cropPrediction.avgYield')}:</strong> {data.avgYield}</p>
                                     </div>
                                 </div>
                             ))}

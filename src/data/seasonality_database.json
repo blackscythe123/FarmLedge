@@ -444,8 +444,8 @@
         "11-18": 1.8102
       }
     },
-    "Beans": {
-      "crop": "Beans",
+    "Onion-bhima shweta": {
+      "crop": "Onion-bhima shweta",
       "state": "Odisha",
       "data_points": 2394,
       "date_range": {
@@ -1966,8 +1966,8 @@
       "perishability_type": "Low",
       "min_days_shelf_life": 14
     },
-    "Capsicum": {
-      "crop": "Capsicum",
+    "Onion-Bhima Super": {
+      "crop": "Onion-Bhima Super",
       "state": "Odisha",
       "data_points": 568,
       "date_range": {
@@ -2064,7 +2064,7 @@
         "1-4": 0.9884
       },
       "perishability_type": "Medium",
-      "min_days_shelf_life": 7
+      "min_days_shelf_life": 55
     },
     "Carrot": {
       "crop": "Carrot",
@@ -5454,7 +5454,7 @@
         "10-24": 1.4862
       },
       "perishability_type": "Medium",
-      "min_days_shelf_life": 7
+      "min_days_shelf_life": 60
     },
     "Rice": {
       "crop": "Rice",

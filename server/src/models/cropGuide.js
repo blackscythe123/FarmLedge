@@ -40,6 +40,10 @@ const cropGuideSchema = new mongoose.Schema({
     wasteConversionRate: String,
     dailyWage: Number
   },
+  translations: {
+    type: Map,
+    of: mongoose.Schema.Types.Mixed
+  },
   recommendations: [String],
   ipfsDocHash: String
 }, { timestamps: true })
