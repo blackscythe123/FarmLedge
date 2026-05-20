@@ -35,6 +35,7 @@ import RetailerProfile from "./pages/profiles/RetailerProfile";
 import ConsumerProfile from "./pages/profiles/ConsumerProfile";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Verifiers from "./pages/Verifiers";
+import { VoiceChatButton } from "./components/VoiceChatButton";
 
 const queryClient = new QueryClient();
 
@@ -46,6 +47,7 @@ const App = () => (
         <Sonner />
         <AuthProvider>
           <BrowserRouter>
+            <VoiceChatButton />
             <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/how-it-works" element={<HowItWorks />} />
